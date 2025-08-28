@@ -1,0 +1,56 @@
+<mvc:View controllerName="com.piaggio.sap.lifing.lifing.controller.SerialNumberCreate"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:core="sap.ui.core">
+     <Page id="pagesn" title="{i18n>Serial Number Creation}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
+      <customHeader>
+			<Toolbar id="_IDGenToolbar1">
+                 <Button id="_IDGenButton3" icon="sap-icon://nav-back" press="onNavButtonPress"/>
+				 <ComboBox id="_IDGenComboBox4" selectionChange="onSelectStorageLocation" >
+					<core:Item id="_IDGenItem4" key="ARTS" text="Team Satellite" />
+					<core:Item id="_IDGenItem5" key="ARTT" text="Test Team Apr." />
+					<core:Item id="_IDGenItem6" key="ARGP" text="Team Ufficiale" />
+				 </ComboBox>
+         <HBox id="idMatBox" width="20%" alignItems="Center" justifyContent="Center">
+    				<Label id="_IDMatLabel3" text="{i18n>Material:}" class="sapUiSmallMarginEnd" />
+				    <SearchField id="_IDMatSearchField" search=".onSearch" />
+		    	</HBox>
+        
+                 <ToolbarSpacer id="_IDGenToolbarSpacersno"/>
+                 <Button id="idCreationButton" press="OnPressCreation" text="Creation" enabled="false"></Button>
+                 <Button id="idAddButton1" icon="sap-icon://add" type="Transparent" press="OnAddSnoMaterial" enabled="false"></Button>
+			</Toolbar>
+	  </customHeader>
+      <content>
+        <Table id="idserialNoCreateTable" inset="false" items="{matList>/}" growing="true" growingThreshold="100" growingScrollToLoad="true" mode="MultiSelect">
+            <columns>
+                <Column id="_IDGenColumne" width="12em" visible="false">
+                  <Text id="_IDGenTexte" text="{i18n>Equipment}" />
+                </Column>
+                <Column id="_IDGenColumnm" width="12em">
+                  <Text id="_IDGenTextma" text="{i18n>Material}" />
+                </Column>
+                <Column id="_IDGenColumnd"
+                    minScreenWidth="Tablet"
+                    demandPopin="true" visible="false">
+                  <Text id="_IDGenTextd" text="{i18n>Description}" />
+                </Column>
+                <Column id="_IDGenColumns"
+                    minScreenWidth="Tablet"
+                    demandPopin="true">
+                  <Text id="_IDGenTexts" text="{i18n>Serial Number}" />
+                </Column>
+                </columns>
+                <items>
+                  <ColumnListItem id="_IDGenColumnListItem" vAlign="Middle" >
+                    <cells>
+                        <Text id="_IDGenText9" text="{matList>Equipment}"/>
+                        <Text id="_IDGenText6" text="{matList>Material}"/>
+                        <Text id="_IDGenText7" text="{matList>Desc}"/>
+                        <Text id="_IDGenText8" text="{matList>snumber}"/>
+                    </cells>
+                   </ColumnListItem>
+                </items>
+        </Table>
+      </content>
+     </Page>
+</mvc:View>

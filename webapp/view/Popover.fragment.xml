@@ -1,0 +1,29 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+	<Popover
+		id="myPopover"
+		title="Serial Number Available"
+		class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+		placement="Bottom">
+        <f:SimpleForm id="SimpleFormDisplay436">
+            <f:content>
+                <Label id="_IDGenLabel1m" text="{i18n>Material}" />
+                <Input id = "idmatinput" value=""/>
+             
+                <Label id="_IDGenLabel1Sno" text="{i18n>Serial Number}" visible="{popOver>/popOverSource}" />
+                <Input id = "idsnoinput" value="" visible="{popOver>/popOverSource}"/>
+            </f:content>
+        </f:SimpleForm>
+		<footer>
+			<OverflowToolbar id="_IDGenOverflowToolbar">
+				<ToolbarSpacer id="_IDGenToolbarSpacer2"/>
+				<Button
+					id="search"
+					text="Search"
+					press=".handleSearchPress" />
+			</OverflowToolbar>
+		</footer>
+	</Popover>
+</core:FragmentDefinition>

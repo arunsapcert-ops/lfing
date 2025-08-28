@@ -1,0 +1,269 @@
+{
+    "_version": "1.28.0",
+    "sap.app": {
+        "id": "com.piaggio.sap.lifing.lifing",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap/generator-fiori:basic",
+            "version": "1.16.1",
+            "toolsId": "8d861619-d32a-402d-8484-82bd69600075"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING1_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "secondService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING2_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "thirdService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING3_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "fourthService":{
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING4_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }                               
+            },
+            "fifthService":{
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING5_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }                
+            },
+            "seventhService":{
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING7_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }                
+            },
+            "eighthService":{
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING8_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                        "odataVersion": "2.0"
+                 }                
+            }
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.84.1",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "com.piaggio.sap.lifing.lifing.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {}
+            },
+            "secondModel":{
+                "dataSource": "secondService",
+                "preload": true,
+                "settings": {}
+            },
+            "thirdModel":{
+                "dataSource": "thirdService",
+                "preload": true,
+                "settings": {}
+            },
+            "fourthModel":{
+                "dataSource": "fourthService",
+                "preload": true,
+                "settings": {}               
+            },
+            "fifthModel":{
+                "dataSource": "fifthService",
+                "preload": true,
+                "settings": {}
+            },
+            "seventhModel":{
+                "dataSource": "seventhService",
+                "preload": true,
+                "settings": {}
+            },
+            "eighthModel":{
+                "dataSource": "eighthService",
+                "preload": true,
+                "settings": {}
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.m.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "com.piaggio.sap.lifing.lifing.view",
+                "controlAggregation": "pages",
+                "controlId": "app",
+                "clearControlAggregation": false
+            },
+            "routes": [
+                {
+                    "name": "RouteView1",
+                    "pattern": ":?query:",
+                    "target": [
+                        "TargetView1"
+                    ]
+                },
+                {
+                    "name": "StructureCreation",
+                    "pattern": "StructureCreation",
+                    "target": [
+                        "TargetView2"
+                    ]
+                },
+                {
+                    "name": "ScratchCreate",
+                    "pattern": "ScratchCreate",
+                    "target": [
+                        "TargetView3"
+                    ]
+                },
+                {
+                    "name": "LifingManagement",
+                    "pattern": "LifingManagement",
+                    "target": [
+                        "TargetView6"
+                    ]
+                },
+                {
+                    "name": "BOMCreate",
+                    "pattern": "BOMCreate",
+                    "target": [
+                        "TargetView4"
+                    ]
+                },
+                {
+                    "name": "SerialNumberCreation",
+                    "pattern": "SerialNumberCreation",
+                    "target": [
+                        "TargetView5"
+                    ]
+                }
+            ],
+            "targets": {
+                "TargetView1": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "View1",
+                    "viewName": "View1"
+                },
+                "TargetView2": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "View2",
+                    "viewName": "View2"
+                },
+                "TargetView3": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ScratchCreate",
+                    "viewName": "ScratchCreate"
+                },
+                "TargetView4": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ScratchCreate",
+                    "viewName": "ScratchCreate"
+                },
+                "TargetView5": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "SerialNumberCreate",
+                    "viewName": "SerialNumberCreate"
+                },
+                "TargetView6": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "ScratchCreate",
+                    "viewName": "ScratchCreate"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "com.piaggio.sap.lifing.lifing.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        }
+    }
+}

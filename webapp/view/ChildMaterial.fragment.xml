@@ -1,0 +1,46 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog id="_IDGenDialogChild" title = "{i18n>CHOOSE SON EQUIPMENT}">
+        <l:Grid defaultSpan = "L12 M12 S12" width = "auto" id = "idGrid1123">
+            <l:content>
+                <Table id="idChildEquTable" inset="false" mode="MultiSelect" items="{ChildList>/}">
+                    <columns>
+                        <Column id="_IDGenColumn21" width="12em">
+                            <Text id="_IDGenText211" text="Position" />
+                        </Column>
+                        <Column id="_IDGenColumnec2" minScreenWidth="Tablet" demandPopin="true">
+                            <Text id="_IDGenTextequp2" text="Equipment" />
+                        </Column>
+                        <Column id="_IDGenColumn32"
+                    		minScreenWidth="Tablet"
+                    		demandPopin="true">
+                            <Text id="_IDGenText22" text="Material" />
+                        </Column>
+                        <Column id="_IDGenColumn42"
+                    		minScreenWidth="Tablet"
+                    		demandPopin="true">
+                            <Text id="_IDGenText32" text="Description" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem id="_IDGenColumnListItem2" vAlign="Middle">
+                            <cells>
+                                <Text id="_IDGenText52" text="{ChildList>level}"/>
+                                <Text id="_IDGenTextec2" text="{ChildList>equipment}"/>
+                                <Text id="_IDGenText72" text="{ChildList>Material}"/>
+                                <Text id="_IDGenText82" text="{ChildList>Description}"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </l:content>
+        </l:Grid>
+        <buttons>
+            <Button id="_IDGenButtonceq" text = "{i18n>CLOSE}" press = "oncloseeqDialog" type = "Reject"/>
+            <Button id="_IDGenButtonceqs" text = "{i18n>SAVE}" press = "onDismantleConfirmation" type = "Accept"/>
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

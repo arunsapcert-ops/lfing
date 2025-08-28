@@ -1,0 +1,40 @@
+
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+ 
+    <Dialog id="_IDGenDialog1" title = "{i18n>ADD MATERIAL}">
+    <l:Grid defaultSpan = "L12 M12 S12" width = "auto" id = "idGrid">
+    <l:content>
+        <f:SimpleForm id="SimpleFormDisplay354"
+            minWidth="1024"
+            maxContainerCols="2"
+            editable="false"
+            layout="ResponsiveGridLayout"
+            labelSpanL="3"
+            labelSpanM="3"
+            emptySpanL="4"
+            emptySpanM="4"
+            columnsL="2"
+            columnsM="2">
+            <f:content>
+                <Label id="_IDGenLabel" text="{i18n>Position}" />
+                <Input id = "idLevel" value="{material>/level}"/>
+             
+                <Label id="_IDGenLabel1" text="{i18n>Functional Group}" />
+                <Input id = "idFgrp" value="{material>/fg}" liveChange="onFgSelect"/>
+             
+                <Label id="_IDGenLabel2" text="{i18n>Material}" />
+                <Input id = "idMaterial" value="{material>/Material}"/>             
+            </f:content>
+        </f:SimpleForm>
+    </l:content>
+    </l:Grid>
+    <buttons>
+    <Button id="_IDGenButton" text = "{i18n>CLOSE}" press = "oncloseDialog" type = "Reject"/>
+    <Button id="_IDGenButton5" text = "{i18n>SAVE}" press = "onSave" type = "Accept"/>
+    </buttons>
+    </Dialog>
+</core:FragmentDefinition>

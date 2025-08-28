@@ -1,0 +1,37 @@
+
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+ 
+    <Dialog id="_IDGenDialogAsno" title = "{i18n>ADD MATERIAL}">
+    <l:Grid defaultSpan = "L12 M12 S12" width = "auto" id = "idGrid123">
+    <l:content>
+        <f:SimpleForm id="SimpleFormDisplay3545"
+            minWidth="1024"
+            maxContainerCols="2"
+            editable="false"
+            layout="ResponsiveGridLayout"
+            labelSpanL="3"
+            labelSpanM="3"
+            emptySpanL="4"
+            emptySpanM="4"
+            columnsL="2"
+            columnsM="2">
+            <f:content>
+                <Label id="_IDGenLabelmat" text="{i18n>Material}" />
+                <Input id = "idLevelmat" value="{material>/Material}"/>
+             
+                <Label id="_IDGenLabelsno" text="{i18n>Serial Number}" />
+                <Input id = "idsno" value="{material>/snumber}"/>
+            </f:content>
+        </f:SimpleForm>
+    </l:content>
+    </l:Grid>
+    <buttons>
+    <Button id="_IDGenButton7" text = "{i18n>CLOSE}" press = "oncloseDialog" type = "Reject"/>
+    <Button id="_IDGenButton8" text = "{i18n>SAVE}" press = "onSnoSave" type = "Accept"/>
+    </buttons>
+    </Dialog>
+</core:FragmentDefinition>

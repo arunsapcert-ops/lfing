@@ -1,0 +1,72 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog id="_IDGenDialog5" title="Material List">
+      <content>
+        <Table id="idserialNoSelect" inset="false" items="{snumberList>/}" 
+          growing="true" growingThreshold="100" growingScrollToLoad="true" mode="MultiSelect">
+            <columns>
+                <Column id="_IDGenColumneq" width="12em">
+                  <Text id="_IDGenTextequ" text="{i18n>Equipment}" />
+                </Column>
+                <Column id="_IDGenColumnmat" width="12em">
+                  <Text id="_IDGenTextmat" text="{i18n>Material}" />
+                </Column>
+                <Column id="_IDGenColumndesc" width="12em">
+                  <Text id="_IDGenTextdesc" text="{i18n>Description}" />
+                </Column>
+                <Column id="_IDGenColumnser">
+                  <Text id="_IDGenTextser" text="{i18n>Serial Number}" />
+                </Column>
+                <Column id="_IDGenColumnkm2">
+                  <Text id="_IDGenTextkm2" text="{i18n>KM2}" />
+                </Column>
+                <Column id="_IDGenColumnfg">
+                  <Text id="_IDGenTextfgss" text="{i18n>functional Group}" />
+                </Column>
+                <Column id="_IDGenColumnNote">
+                  <Text id="_IDGenTextnote" text="{i18n>Note}" />
+                </Column>
+                <Column id="_IDGenColumnPos">
+                  <Text id="_IDGenTextpos" text="{i18n>Position}" />
+                </Column>
+                <Column id="_IDGenColumnkmrev">
+                  <Text id="_IDGenTextkmrev" text="{i18n>Km Revisione}" />
+                </Column>
+                <Column id="_IDGenColumnkmmin">
+                  <Text id="_IDGenTextkmmin" text="{i18n>Km min}" />
+                </Column>
+                <Column id="_IDGenColumnkmmax">
+                  <Text id="_IDGenTextkmmax" text="{i18n>Km max}" />
+                </Column>
+                <Column id="_IDGenColumnTrc">
+                  <Text id="_IDGenTextTrc" text="{i18n>Tracablity}" />
+                </Column>
+                </columns>
+                <items>
+                  <ColumnListItem id="_IDGenColumnListItem123" vAlign="Middle" >
+                    <cells>
+                        <Text id="_IDGenText191" text="{snumberList>Zequnr}"/>
+                        <Text id="_IDGenText161" text="{snumberList>Zmatnr}"/>
+                        <Text id="_IDGenText171" text="{snumberList>Zmaktx}"/>
+                        <Text id="_IDGenText181" text="{snumberList>Zsernr}"/>
+                        <Text id="_IDGenText192" text="{snumberList>Zkm2}"/>
+                        <Text id="_IDGenText162" text="{snumberList>ZfunctionalGroup}"/>
+                        <Text id="_IDGenText172" text="{snumberList>Note}"/>
+                        <Text id="_IDGenText182" text="{snumberList>Zposition}"/>
+                        <Text id="_IDGenText193" text="{snumberList>ZkmRevisione}"/>
+                        <Text id="_IDGenText163" text="{snumberList>ZkmMin}"/>
+                        <Text id="_IDGenText173" text="{snumberList>ZkmMax}"/>
+                        <Text id="_IDGenText183" text="{snumberList>ZtracciabilitaSn}"/>
+                    </cells>
+                   </ColumnListItem>
+                </items>
+           </Table>
+        </content>
+        <beginButton>
+          <Button id="_IDGenButton4" text="OK" press="onSelectSerialNumberPress"/>
+        </beginButton>
+    </Dialog>
+</core:FragmentDefinition>

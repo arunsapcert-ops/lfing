@@ -1,0 +1,18 @@
+<mvc:View controllerName="com.piaggio.sap.lifing.lifing.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="pageid" title="{i18n>title}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
+      <content>
+        <HBox id="_IDGenVBox2" alignItems="Center" justifyContent="Center" height= "75%">
+        <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onScPress" header="{i18n>Structure Creation}">
+    	    </GenericTile>
+        <GenericTile id="_IDGenGenericTile2" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onLmPress" header="{i18n>Lifing Management}">
+	        </GenericTile>
+        <GenericTile id="_IDGenGenericTile3" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onSnopress" header="{i18n>Serial Number Creation}">
+	        </GenericTile>
+        <GenericTile id="_IDGenGenericTile6" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onHmgtpress" header="{i18n>History Management}">
+	        </GenericTile>
+        </HBox>
+      </content>
+    </Page>
+</mvc:View>

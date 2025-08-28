@@ -1,0 +1,11 @@
+{
+    "routes": [
+      {
+        "source": "^/odata/.*$", 
+        "target": "/odata",
+        "destination": "PGE",
+        "authenticationType": "xsuaa"
+      }
+    ]
+  }
+  

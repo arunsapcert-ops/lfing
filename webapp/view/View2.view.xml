@@ -1,0 +1,20 @@
+<mvc:View controllerName="com.piaggio.sap.lifing.lifing.controller.View2"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>Structure Creation}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
+        <content>
+         <HBox id="_IDGenVBox" alignItems="Center" justifyContent="Center" height= "75%" >
+          <GenericTile id="_IDGenGenericTile4" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="OnCsPress" frameType="OneByHalf" header="{i18n>Create From Scratch/File}">
+		    <!-- <TileContent>
+			    <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png" />
+		    </TileContent> -->
+    	  </GenericTile>
+         <GenericTile id="_IDGenGenericTile" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="OnBOMpress" frameType="OneByHalf" header="{i18n>Create From BOM}">
+		    <!-- <TileContent>
+			    <ImageContent src="test-resources/sap/m/demokit/sample/GenericTileAsLaunchTile/images/SAPLogoLargeTile_28px_height.png" />
+		    </TileContent> -->
+	      </GenericTile>
+          </HBox>
+        </content>
+    </Page>
+</mvc:View>

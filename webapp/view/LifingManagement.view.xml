@@ -1,0 +1,150 @@
+<mvc:View controllerName="com.piaggio.sap.lifing.lifing.controller.LifingManagement"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:u="sap.ui.unified" 
+    xmlns:layout = "sap.ui.layout" xmlns:f="sap.ui.layout.form"  
+    xmlns:t="sap.ui.table">
+    <Page id="pagelm" title="{i18n>Lifing Management}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
+		<customHeader>
+			<Toolbar id="_IDGenToolbarlm">
+                 <HBox id="_IDGenHBox">
+                 <Button id="_IDGenButtonlm" icon="sap-icon://nav-back" press="onNavButtonPress"/>
+				 <ComboBox id="_IDGenComboBoxlm" selectionChange="onSelectStorageLocation" >
+					<core:Item id="_IDGenItemlm1" key="ARTS" text="Team Satellite" />
+					<core:Item id="_IDGenItemlm2" key="ARTT" text="Test Team Apr." />
+					<core:Item id="_IDGenItemlm3" key="ARGP" text="Team Ufficiale" />
+				 </ComboBox>
+                  <HBox id="idBomBoxlm" width="20%" alignItems="Center" justifyContent="Center" class="sapUiSmallMarginEnd">
+    				<Label id="_IDGenLabellm" text="{i18n>Serial Number}: " class="sapUiSmallMarginEnd" />
+				    <SearchField id="_IDGenSearchFieldlm" search=".onSearch" />
+                  </HBox>
+                <Button id="_IDGenButtonecl" text="Equipment Creation" press="onEquipmentCreation" enabled="false"></Button>
+				<Button id="_IDGenButtonsavel" text="Save" press="onSaveEquipment" enabled="false"></Button>
+                <Button id="_IDGenButtondisl" text="Dismantle" press="onPressDismantle" enabled="false"></Button>
+                <Button id="_IDGenButtonsnol" text="Serial Number Available" press="onPressSno" enabled="false"></Button>
+                <Button id="_IDGenButtonaddsl" text="Add Existing Structure" press="onPressStructure" enabled="false"></Button>               
+                <Button id="idAddButtonl" icon="sap-icon://add" type="Transparent" press="OnAddMaterial" enabled="false"></Button>
+                <Button id="idDelButtonl" icon="sap-icon://delete" type="Transparent" press="OnDeleteMaterial" enabled="false"></Button>
+				<!-- <ToolbarSpacer id="_IDGenToolbarSpacerlm"/> -->
+				 <Button id="_IDGenButtonlmc" text="{i18n>Save New Run}" press="onMaterialCheck" enabled="false"></Button>
+                </HBox>
+			</Toolbar>
+		</customHeader>
+        <content>
+			<!-- <VBox id="_IDGenVBox1" height= "75%"> -->
+                <t:TreeTable id="idlifingManagementTable"
+                    rows="{mList>/root}"
+                    selectionMode="MultiToggle"
+                    rowSelectionChange="onTableSelection">
+                    <t:Column id="_IDGenColumnlmf" width="3%" showFilterMenuEntry="true" filterProperty="fg">
+                        <Label id="_IDGenLabellmfg" text="Functional Group" wrapping="true"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmfg" text="{mList>fg}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlm" width="3%" showFilterMenuEntry="true" filterProperty="level">
+                        <Label id="_IDGenLabellml" text="Position"/>
+                        <t:template>
+                            <Text id="_IDGenTextlml" text="{mList>level}"/>
+                        </t:template>
+                    </t:Column>
+
+                    <t:Column id="_IDGenColumnlme" width="4%" showFilterMenuEntry="true" filterProperty="equipment">
+                        <Label id="_IDGenLabellmeq" text="Equipment"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmeq" text="{mList>equipment}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlmm" width="4%" showFilterMenuEntry="true" filterProperty="Material">
+                        <Label id="_IDGenLabellmm" text="Material"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmm" text="{mList>Material}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlmd" width="5%" showFilterMenuEntry="true" filterProperty="Description">
+                        <Label id="_IDGenLabellmdes" text="Description"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmdes" text="{mList>Description}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlms5" width="4%" showFilterMenuEntry="true" filterProperty="sNo">
+                        <Label id="_IDGenLabellmsn" text="Serial Number"/>
+                        <t:template>
+                            <VBox id="_IDGenVBoxlm5">
+                              <Text id="_IDGenTextlmsn" text="{mList>sNo}"/>
+                              <!-- <Input id="_IDGenlmIp" value="{mList>sNo}"/> -->
+                            </VBox>
+                            <!-- <Text id="_IDGenTextsn" text="{mList>sNo}"/> -->
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlm6" width="5%" showFilterMenuEntry="true" filterProperty="km">
+                        <Label id="_IDGenLabellmkm" text="Note"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmkm" text="{mList>km}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlm7" width="3%" showFilterMenuEntry="true" filterProperty="Revisione">
+                        <Label id="_IDGenLabellmrev" text="Revisione"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmrev" text="{mList>Revisione}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlmm8" width="3%" showFilterMenuEntry="true" filterProperty="min">
+                        <Label id="_IDGenLabellmmin" text="MIN"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmmin" text="{mList>min}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnlmma" width="3%" showFilterMenuEntry="true" filterProperty="max">
+                        <Label id="_IDGenLabellmmax" text="MAX"/>
+                        <t:template>
+                            <Text id="_IDGenTextlmmax" text="{mList>max}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnfblm" width="3%" visible="false">
+                        <Label id="_IDGenLabelfblm" text="Feedback"/>
+                        <t:template>
+                           <VBox id="_IDGenVBox3lm">
+                             <Text id="_IDGenTextlm16" text= "{mList>fbMessage}" visible="{= ${mList>fb} !== 'OK'}"/>
+                             <core:Icon id="_IDGenlmIcon" src="sap-icon://accept" visible="{= ${mList>fb} === 'OK'}"/>
+                           </VBox>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnelmkm" width="3%">
+                        <Label id="_IDGenLabelelmkm" text="{i18n>Status}"/>
+                        <t:template>
+                           	<ObjectStatus id="_IDGenObjectStatus"
+							class="sapUiSmallMarginBottom"
+							text="Currently closed"
+							icon="sap-icon://circle-task"
+							state="{parts: [
+                                       {path:'mList>Km'},
+                                       {path:'mList>KmMin'},
+                                       {path:'mList>KmMax'},
+                                       {path:'mList>KmRevisione'}
+                                    ], 
+                                    formatter:'.formatStatus'}"  />                        
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnelmActions" width="3%">
+                        <Label id="_IDGenLabelelmActions" text="{i18n>Move}"/>
+                        <t:template>
+                            <HBox id="idMovementBtns">
+                               <Button id="idMoveUp" icon="sap-icon://navigation-up-arrow" type="Transparent" press="OnMoveUpMaterial">
+                                    </Button>
+                               <Button id="idMoveDown" icon="sap-icon://navigation-down-arrow" type="Transparent" press="OnMoveDownMaterial">
+                                    </Button> 
+                            </HBox>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumnelmdb" width="2%">
+                        <Label id="_IDGenLabelelmdb" text=""/>
+                        <t:template>
+                           <Button id="idEditButtonlm" icon="sap-icon://edit" type="Transparent" press="OnEditMaterial">
+                           </Button>
+                        </t:template>
+                    </t:Column>
+                </t:TreeTable>
+			<!-- </VBox> -->
+        </content>
+    </Page>
+</mvc:View>
