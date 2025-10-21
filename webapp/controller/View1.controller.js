@@ -17,6 +17,12 @@ function (Controller) {
             this.getOwnerComponent().getRouter().navTo("SerialNumberCreation");
         },
 
+        onHmgtpress: function() {
+            this.getOwnerComponent().getRouter().navTo("HistorySearch");
+        },
+        onUploadpress: function() {
+            this.getOwnerComponent().getRouter().navTo("DataUpload");
+        },
         onNavButtonPress: function() {
             window.history.go(-1);
         },

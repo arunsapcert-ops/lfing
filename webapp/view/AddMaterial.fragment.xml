@@ -20,14 +20,14 @@
             columnsL="2"
             columnsM="2">
             <f:content>
-                <Label id="_IDGenLabel" text="{i18n>Position}" />
-                <Input id = "idLevel" value="{material>/level}"/>
+                <Label id="_IDGenLabel" text="{i18n>Position}" required="true"/>
+                <Input id = "idLevel" value="{material>/level}" required="true"/>
              
                 <Label id="_IDGenLabel1" text="{i18n>Functional Group}" />
                 <Input id = "idFgrp" value="{material>/fg}" liveChange="onFgSelect"/>
              
-                <Label id="_IDGenLabel2" text="{i18n>Material}" />
-                <Input id = "idMaterial" value="{material>/Material}"/>             
+                <Label id="_IDGenLabel2" text="{i18n>Material}" required="true" />
+                <Input id = "idMaterial" value="{material>/Material}" required="true"/>             
             </f:content>
         </f:SimpleForm>
     </l:content>

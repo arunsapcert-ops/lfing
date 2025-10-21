@@ -21,6 +21,6 @@ builder:
           name: ZLIFING
           description: Zlifing
           package: ZSLE_WM_GF_005
-          transport: PGEK943779
+          transport: PGEK946152
         exclude:
           - /test/

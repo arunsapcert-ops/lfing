@@ -29,9 +29,9 @@
                         <ColumnListItem id="_IDGenColumnListItem1" vAlign="Middle">
                             <cells>
                                 <Text id="_IDGenText51" text="{eList>level}"/>
-                                <Text id="_IDGenTextec1" text="{eList>equipment}"/>
+                                <Text id="_IDGenTextec1" text="{eList>Equipment}"/>
                                 <Text id="_IDGenText71" text="{eList>Material}"/>
-                                <Text id="_IDGenText81" text="{eList>Description}"/>
+                                <Text id="_IDGenText81" text="{eList>MaterialDescription}"/>
                             </cells>
                         </ColumnListItem>
                     </items>

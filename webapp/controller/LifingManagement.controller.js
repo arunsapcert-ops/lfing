@@ -67,7 +67,8 @@ function (Controller,Fragment,MessageBox) {
         onSelectStorageLocation: function(oEvent) {
             this.storageLocation = oEvent.getSource().getSelectedKey();
             this.getView().byId("_IDGenComboBoxlm").setEnabled(this.storageLocation?false:true);
-            this.getView().byId("idAddButtonl").setEnabled(true);
+            this.getView().byId("_IDGenSearchField").setEnabled(!!this.storageLocation);
+            this.getView().byId("idAddButtonl").setEnabled(!!this.storageLocation);
             this.getView().byId("_IDGenButtonsnol").setEnabled(true);
             this.getView().byId("_IDGenButtonaddsl").setEnabled(true);
         },

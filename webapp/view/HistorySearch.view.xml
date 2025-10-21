@@ -1,0 +1,121 @@
+<mvc:View
+    controllerName="com.piaggio.sap.lifing.lifing.controller.HistorySearch"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+  <VBox id="_IDGenVBox7" class="sapUiSmallMargin">
+<Button id="_IDGenButton21" icon="sap-icon://nav-back" press="onNavButtonPress" />
+    <!-- Selection Area 
+    <f:SimpleForm id="_IDGenSimpleForm"
+      editable="true"
+      layout="ResponsiveGridLayout"
+      labelSpanXL="3" labelSpanL="3" labelSpanM="4" labelSpanS="12"
+      adjustLabelSpan="false"
+      emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+      columnsXL="2" columnsL="2" columnsM="1"
+      class="sapUiLargeMarginBottom">
+
+      <f:content>
+
+        <Label id="_IDGenLabel5" text="Material (multiple)"/>
+        <MultiInput id="miMaterial"  showValueHelp="false" placeholder="Type & Enter"
+            submit="onAddToken"/>
+
+        <Label id="_IDGenLabel6" text="Equipment (multiple)"/>
+        <MultiInput id="miEquipment" showValueHelp="false" placeholder="Type & Enter"
+            submit="onAddToken"/>
+
+        <Label id="_IDGenLabel7" text="Serial Number (multiple)"/>
+        <MultiInput id="miSerial"    showValueHelp="false" placeholder="Type & Enter"
+            submit="onAddToken"/>
+
+        <Label id="_IDGenLabel8" text="Storage Location (single)"/>
+        <Input
+          id="inpStorageLoc"
+          value="{view>/form/StorageLocation}"
+          placeholder="e.g. 0001" />
+
+        <Toolbar id="_IDGenToolbar2" design="Transparent" class="sapUiSmallMarginTop">
+          <ToolbarSpacer id="_IDGenToolbarSpacer"/>
+          <Button id="btnClear" text="Clear" type="Transparent" press=".onClear"/>
+          <Button id="btnSearch" text="Search" type="Emphasized" press=".onSearch" />
+        </Toolbar>
+
+      </f:content>
+    </f:SimpleForm> -->
+
+    <f:SimpleForm
+      editable="true"
+      layout="ResponsiveGridLayout"
+      labelSpanXL="3" labelSpanL="3" labelSpanM="4" labelSpanS="12"
+      columnsXL="2" columnsL="2" columnsM="1"
+      class="sapUiLargeMarginBottom">
+
+      <f:content>
+
+        <Label text="Material"/>
+        <MultiInput id="miMaterial"
+                    placeholder="Type &amp; press Enter"
+                    showValueHelp="false"
+                    submit="onAddToken"/>
+
+        <Label text="Equipment"/>
+        <MultiInput id="miEquipment"
+                    placeholder="Type &amp; press Enter"
+                    showValueHelp="false"
+                    submit="onAddToken"/>
+
+        <Label text="Serial Number"/>
+        <MultiInput id="miSerial"
+                    placeholder="Type &amp; press Enter"
+                    showValueHelp="false"
+                    submit="onAddToken"/>
+
+        <Label text="Storage Location"/>
+        <Input id="inpStorageLoc" placeholder="e.g. 0001"/>
+
+        <Toolbar design="Transparent" class="sapUiSmallMarginTop">
+          <ToolbarSpacer/>
+          <Button text="Search" type="Emphasized" press="onSearch"/>
+        </Toolbar>
+
+      </f:content>
+    </f:SimpleForm>
+
+    <!-- Results Table (initially hidden) -->
+    <Table id="resultsTable" inset="false" growing="true" growingThreshold="30" visible="true">
+      <headerToolbar>
+        <Toolbar id="_IDGenToolbar3">
+          <Title id="tableTitle" text="Results" level="H3"/>
+          <ToolbarSpacer id="_IDGenToolbarSpacer1"/>
+          <Button id="_IDGenButton1" icon="sap-icon://download" text="Export" press=".onExport"/>
+        </Toolbar>
+      </headerToolbar>
+
+      <columns>
+        <Column id="_IDGenColumn10"><Text id="_IDGenText" text="Equipment"/></Column>
+        <Column id="_IDGenColumn12"><Text id="_IDGenText1" text="Material"/></Column>
+        <Column id="_IDGenColumn13"><Text id="_IDGenText2" text="Lap Distance"/></Column>
+        <Column id="_IDGenColumn14" minScreenWidth="Tablet"><Text id="_IDGenText3" text="Moto"/></Column>
+        <Column id="_IDGenColumn15" minScreenWidth="Tablet"><Text id="_IDGenText4" text="Run"/></Column>
+        <Column id="_IDGenColumn16" hAlign="End"><Text id="_IDGenText5" text="Serial Number"/></Column>
+      </columns>
+
+      <items>
+        <ColumnListItem id="_IDGenColumnListItem3">
+          <cells>
+            <ObjectIdentifier id="_IDGenObjectIdentifier" title="{searchResults>Zequnr}"/>
+            <Text id="_IDGenText10" text="{searchResults>Zmatnr}" />
+            <Text id="_IDGenText11" text="{searchResults>Zlapdistance}" />
+            <Text id="_IDGenText12" text="{searchResults>Zmoto}" />
+            <Text id="_IDGenText13" text="{searchResults>Zrun}" />
+            <Text id="_IDGenText14" text="{searchResults>Zserialnumber}" />
+            <!-- <ObjectNumber id="_IDGenObjectNumber" number="{mainModel>Quantity}" unit="{mainModel>UoM}" /> -->
+          </cells>
+        </ColumnListItem>
+      </items>
+    </Table> 
+
+  </VBox>
+</mvc:View>

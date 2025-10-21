@@ -12,6 +12,8 @@
 	        </GenericTile>
         <GenericTile id="_IDGenGenericTile6" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onHmgtpress" header="{i18n>History Management}">
 	        </GenericTile>
+                <GenericTile id="_IDGenGenericTile7" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onUploadpress" header="{i18n>RunLap Data Upload}">
+	        </GenericTile>
         </HBox>
       </content>
     </Page>

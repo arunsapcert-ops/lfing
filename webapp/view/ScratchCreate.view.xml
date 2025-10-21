@@ -20,7 +20,7 @@
                     enabled = "false"/>
                  <HBox id="idBomBox" width="20%" alignItems="Center" justifyContent="Center">
     				<Label id="_IDGenLabel3" text="Material: " class="sapUiSmallMarginEnd" />
-				    <SearchField id="_IDGenSearchField" search=".onSearch" />
+				    <SearchField id="_IDGenSearchField" search=".onSearch" enabled="true" />
 		    	</HBox>
 				 <!-- <Button id="_IDGenButton1" text="Material Check" press="onMaterialCheck" enabled="false"></Button> -->
 				 <Button id="_IDGenButtonec" text="Equipment Creation" press="onEquipmentCreation" enabled="false"></Button>
@@ -36,33 +36,36 @@
 		</customHeader>
         <content>
 			<!-- <VBox id="_IDGenVBox1" height= "75%"> -->
-                <t:TreeTable id="idscratchCreateTable"
-                    rows="{mList>/root}"
+                <t:TreeTable id="idscratchCreateTable"                    
+                    rows="{path: 'mList>/root', parameters: {arrayNames: ['children']}}"
                     selectionMode="MultiToggle"
                     rowSelectionChange="onTableSelection"
                     visibleRowCountMode="Auto">
-                    <t:Column id="_IDGenColumn1" width="4%" showFilterMenuEntry="true" filterProperty="fg">
+                    <t:Column id="_IDGenColumn1" width="40px" showFilterMenuEntry="true" filterProperty="fg">
                         <Label id="_IDGenLabelfg" text="Functional Group" wrapping="true"/>
                         <t:template>
-                            <VBox id="_IDGenVBox51">
-                              <Text id="_IDGenTextfg" text="{mList>fg}" visible="{= !!${mList>equipment}}"/>
-                              <Input id="_IDGenfg" value="{mList>fg}" visible="{= !${mList>equipment}}"/>
-                            </VBox>
+                            <Input id="_IDGenfg" value="{mList>fg}" editable="{= !${mList>Equipment}}" />
                         </t:template>
                     </t:Column>
-                    <t:Column id="_IDGenColumn" width="3%" showFilterMenuEntry="true" filterProperty="level">
+                    <!-- <t:Column id="_IDGenColumn" width="3%" showFilterMenuEntry="true" filterProperty="level">
                         <Label id="_IDGenLabel4" text="Position" wrapping="true"/>
                         <t:template>
                             <VBox id="_IDGenVBox52">
                               <Text id="_IDGenTextlev" text="{mList>level}" visible="{= !!${mList>equipment}}"/>
-                              <Input id="_IDGenlev" value="{mList>level}" visible="{= !${mList>equipment}}"/>
+                              <Input id="_IDGenlev" value="{mList>Position}" visible="{= !${mList>equipment}}"/>
                             </VBox>
                         </t:template>
-                    </t:Column>
+                    </t:Column> -->
+                    <t:Column id="_IDGenColumn" width="30px" showFilterMenuEntry="true" filterProperty="level">
+                        <Label id="_IDGenLabel4" text="Position" wrapping="true"/>
+                            <t:template>
+                                <Input id="_IDGenlev" value="{mList>level}" editable="{= !${mList>Equipment}}"/>
+                            </t:template>
+                        </t:Column>
                     <t:Column id="_IDGenColumn2" width="4%" showFilterMenuEntry="true" filterProperty="equipment">
                         <Label id="_IDGenLabeleq" text="Equipment" wrapping="true"/>
                         <t:template>
-                            <Text id="_IDGenTexteq" text="{mList>equipment}"/>
+                            <Text id="_IDGenTexteq" text="{mList>Equipment}"/>
                         </t:template>
                     </t:Column>
                     <t:Column id="_IDGenColumn3" width="4%" showFilterMenuEntry="true" filterProperty="Material">
@@ -74,16 +77,15 @@
                     <t:Column id="_IDGenColumn4" width="6%" showFilterMenuEntry="true" filterProperty="Description">
                         <Label id="_IDGenLabeldes" text="Description" wrapping="true"/>
                         <t:template>
-                            <Text id="_IDGenTextdes" text="{mList>Description}"/>
+                            <Text id="_IDGenTextdes" text="{mList>MaterialDescription}"/>
                         </t:template>
                     </t:Column>
-                    <t:Column id="_IDGenColumn5" width="4%">
+                    <t:Column id="_IDGenColumn5" width="4%" filterProperty="sNo">
                         <Label id="_IDGenLabelsn" text="Serial Number" wrapping="true"/>
                         <t:template>
                             <!-- <Input id="_IDGenIp" value="{mList>isNo}"/> -->
                             <VBox id="_IDGenVBox5">
-                              <Text id="_IDGenTextsn" text="{mList>sNo}" visible="{= !!${mList>equipment}}"/>
-                              <Input id="_IDGenIp" value="{mList>sNo}" visible="{= !${mList>equipment}}"/>
+                               <Input id="_IDGenIp" value="{mList>sNo}" editable="{= !${mList>Equipment}}"/>
                             </VBox>
                             <!-- <Text id="_IDGenTextsn" text="{mList>sNo}"/> -->
                         </t:template>
@@ -91,10 +93,10 @@
                     <t:Column id="_IDGenColumn6" width="6%">
                         <Label id="_IDGenLabelkm" text="Note" wrapping="true"/>
                         <t:template>
-                            <!-- <Input id="_IDGenTextkm" value="{mList>km}"/> -->
+                            <!-- <Input id="_IDGenTextkm" value="{mList>km}"/> value="{mList>Note}" visible="{= !${mList>Equipment}}" -->
                             <VBox id="_IDGenVBox6">
-                              <Text id="_IDGenTextkm" text="{mList>km}" visible="{= !!${mList>equipment}}"/>
-                              <Input id="_IDGenkm" value="{mList>km}" visible="{= !${mList>equipment}}"/>
+                              <Text id="_IDGenTextkm" text="{mList>km}" visible="{= !!${mList>Equipment}}"/>
+                              <Input id="_IDGenkm" value="{= ${mList>Note} === undefined ? 'undefined' : ${mList>Note} }"  editable="{= !${mList>Equipment}}"/>
                             </VBox>
                             <!-- <Text id="_IDGenTextkm" text="{mList>km}"/> -->
                         </t:template>
@@ -116,20 +118,20 @@
                         <t:template>
                             <Text id="_IDGenTextrevkm" text="{mList>RevisionKm}"/>
                         </t:template>
-                    </t:Column>                    
-                    <t:Column id="_IDGenColumn8" width="3%" showFilterMenuEntry="true" filterProperty="min">
-                        <Label id="_IDGenLabelmin" text="MIN" wrapping="true"/>
-                        <t:template>
-                            <Text id="_IDGenTextmin" text="{mList>min}"/>
-                        </t:template>
                     </t:Column>
-                    <t:Column id="_IDGenColumn9" width="3%" showFilterMenuEntry="true" filterProperty="max">
+                    <t:Column id="_IDGenColumn9" width="20px" showFilterMenuEntry="true" filterProperty="max">
                         <Label id="_IDGenLabelmax" text="MAX" wrapping="true"/>
                         <t:template>
                             <Text id="_IDGenTextmax" text="{mList>max}"/>
                         </t:template>
-                    </t:Column>
-                    <t:Column id="_IDGenColumnfb" width="3%" visible="false" showFilterMenuEntry="true" filterProperty="fb">
+                    </t:Column>                    
+                    <t:Column id="_IDGenColumn8" width="20px" showFilterMenuEntry="true" filterProperty="min">
+                        <Label id="_IDGenLabelmin" text="MIN" wrapping="true"/>
+                        <t:template>
+                            <Text id="_IDGenTextmin" text="{mList>min}"/>
+                        </t:template>
+                    </t:Column>                    
+                    <t:Column id="_IDGenColumnfb" width="30px" visible="true" showFilterMenuEntry="true" filterProperty="fb">
                         <Label id="_IDGenLabelfb" text="Feedback" wrapping="true"/>
                         <t:template>
                            <VBox id="_IDGenVBox3">
@@ -138,17 +140,42 @@
                            </VBox>
                         </t:template>
                     </t:Column>
+                     
+<t:Column id="_IDGenColumnKm" width="20px" visible="false" showFilterMenuEntry="true" filterProperty="Km">
+    <Label text="Km" wrapping="false"/>
+    <t:template>
+        <Text text="{mList>Km}" />
+    </t:template>
+</t:Column>
+
+
+<t:Column id="_IDGenColumnNextRun" width="30px" visible="false" showFilterMenuEntry="true" filterProperty="NextRun">
+    <Label text="Next Run" wrapping="true"/>
+    <t:template>
+        <Text text="{mList>NextRun}" />
+    </t:template>
+</t:Column>
+
+
+<t:Column id="_IDGenColumnKmNextRun" width="30px" visible="false" showFilterMenuEntry="true" filterProperty="KmNextRun">
+    <Label text="Km Next Run" wrapping="true"/>
+    <t:template>
+        <Text text="{mList>KmNextRun}" />
+    </t:template>
+</t:Column>
                     <t:Column id="_IDGenColumnedb" width="2%">
                         <Label id="_IDGenLabeledb" text="" wrapping="true"/>
                         <t:template>
                           <HBox id="_IDGenHBox1">
-                           <Button id="idEditButton" icon="sap-icon://edit" type="Transparent" press="OnEditMaterial" visible="{= !!${mList>equipment}}">
+                           <Button id="idEditButton" icon="sap-icon://edit" type="Transparent" press="OnEditMaterial" visible="{= !!${mList>Equipment}}">
                            </Button>
-                           <Button id="idRevButton" icon="sap-icon://project-definition-triangle" type="Transparent" tooltip="Revision" press="OnRevisionPress">
-                           </Button>
+                           <!-- <Button id="idRevButton" icon="sap-icon://project-definition-triangle" type="Transparent" tooltip="Revision" press="OnRevisionPress">
+                           </Button> -->
                           </HBox> 
                         </t:template>
                     </t:Column>
+                   
+
                 </t:TreeTable>
 			<!-- </VBox> -->
         </content>

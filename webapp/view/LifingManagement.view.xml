@@ -15,7 +15,7 @@
 				 </ComboBox>
                   <HBox id="idBomBoxlm" width="20%" alignItems="Center" justifyContent="Center" class="sapUiSmallMarginEnd">
     				<Label id="_IDGenLabellm" text="{i18n>Serial Number}: " class="sapUiSmallMarginEnd" />
-				    <SearchField id="_IDGenSearchFieldlm" search=".onSearch" />
+				    <SearchField id="_IDGenSearchFieldlm" search=".onSearch" enabled="false"  />
                   </HBox>
                 <Button id="_IDGenButtonecl" text="Equipment Creation" press="onEquipmentCreation" enabled="false"></Button>
 				<Button id="_IDGenButtonsavel" text="Save" press="onSaveEquipment" enabled="false"></Button>

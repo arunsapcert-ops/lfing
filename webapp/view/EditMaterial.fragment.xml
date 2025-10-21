@@ -21,16 +21,16 @@
             columnsM="2">
             <f:content>
                 <Label id="_IDGenLabele" text="{i18n>Position}" />
-                <Input id = "idLevele" enabled="false" value="{ematerial>/level}"/>
+                <Input id = "idLevele"  value="{ematerial>/level}"/>
              
                 <Label id="_IDGenLabelee" text="{i18n>Functional Group}" />
                 <Input id = "idFgrpe" value="{ematerial>/fg}"/>
              
                 <Label id="_IDGenLabel2e" text="{i18n>Material}" />
-                <Input id = "idMateriale" value="{ematerial>/Material}"/> 
+                <Input id = "idMateriale" enabled="false" value="{ematerial>/Material}"/> 
 
                 <Label id="_IDGenLabel2sno" text="{i18n>Serial Number}" />
-                <Input id = "idMaterialsno" value="{ematerial>/sno}"/>
+                <Input id = "idMaterialsno" enabled="false" value="{ematerial>/sno}"/>
 
                 <Label id="_IDGenLabel2km" text="{i18n>Note}" />
                 <Input id = "idMaterialkm" value="{ematerial>/km}"/>             

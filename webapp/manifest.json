@@ -43,41 +43,59 @@
                     "odataVersion": "2.0"
                 }
             },
-            "fourthService":{
+            "fourthService": {
                 "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING4_SRV/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
-                }                               
+                }
             },
-            "fifthService":{
+            "fifthService": {
                 "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING5_SRV/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
-                }                
+                }
             },
-            "seventhService":{
+            "seventhService": {
                 "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING7_SRV/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
-                }                
+                }
             },
-            "eighthService":{
+            "eighthService": {
                 "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING8_SRV/",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
                     "localUri": "localService/metadata.xml",
-                        "odataVersion": "2.0"
-                 }                
+                    "odataVersion": "2.0"
+                }
+            },
+            "ninethService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING9_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "tenthService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING10_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
             }
         }
     },
@@ -122,33 +140,43 @@
                 "preload": true,
                 "settings": {}
             },
-            "secondModel":{
+            "secondModel": {
                 "dataSource": "secondService",
                 "preload": true,
                 "settings": {}
             },
-            "thirdModel":{
+            "thirdModel": {
                 "dataSource": "thirdService",
                 "preload": true,
                 "settings": {}
             },
-            "fourthModel":{
+            "fourthModel": {
                 "dataSource": "fourthService",
                 "preload": true,
-                "settings": {}               
+                "settings": {}
             },
-            "fifthModel":{
+            "fifthModel": {
                 "dataSource": "fifthService",
                 "preload": true,
                 "settings": {}
             },
-            "seventhModel":{
+            "seventhModel": {
                 "dataSource": "seventhService",
                 "preload": true,
                 "settings": {}
             },
-            "eighthModel":{
+            "eighthModel": {
                 "dataSource": "eighthService",
+                "preload": true,
+                "settings": {}
+            },
+            "ninethModel": {
+                "dataSource": "ninethService",
+                "preload": true,
+                "settings": {}
+            },
+            "tenthModel": {
+                "dataSource": "tenthService",
                 "preload": true,
                 "settings": {}
             }
@@ -200,6 +228,11 @@
                     ]
                 },
                 {
+                    "pattern": "DataUpload",
+                    "name": "DataUpload",
+                    "target": "TargetView8"
+                },
+                {
                     "name": "BOMCreate",
                     "pattern": "BOMCreate",
                     "target": [
@@ -211,6 +244,13 @@
                     "pattern": "SerialNumberCreation",
                     "target": [
                         "TargetView5"
+                    ]
+                },
+                {
+                    "name": "HistorySearch",
+                    "pattern": "HistorySearch",
+                    "target": [
+                        "TargetView7"
                     ]
                 }
             ],
@@ -256,6 +296,20 @@
                     "clearControlAggregation": false,
                     "viewId": "ScratchCreate",
                     "viewName": "ScratchCreate"
+                },
+                "TargetView7": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "HistorySearch",
+                    "viewName": "HistorySearch"
+                },
+                "TargetView8": {
+                    "viewType": "XML",
+                    "transition": "slide",
+                    "clearControlAggregation": false,
+                    "viewId": "DataUpload",
+                    "viewName": "DataUpload"
                 }
             }
         },

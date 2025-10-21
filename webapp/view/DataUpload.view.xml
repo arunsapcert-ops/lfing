@@ -1,0 +1,58 @@
+<mvc:View
+    controllerName="com.piaggio.sap.lifing.lifing.controller.DataUpload"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+<Button id="_IDGenButton27" icon="sap-icon://nav-back" press="onNavButtonPress" />
+    <f:DynamicPage
+        id="dataUploadPage"
+        title="RunLap Data Upload"
+        headerExpanded="true">
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="RunLap Data Upload" level="H1"/>
+                </f:heading>
+                <f:actions>
+                    <Button
+                        id="saveButton"
+                        text="Save"
+                        type="Emphasized"
+                        icon="sap-icon://save"
+                        press=".onSave"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <Panel
+                headerText="Upload Data"
+                class="sapUiResponsiveContentPadding">
+                <form:SimpleForm
+                    id="idSimpleForm"
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    labelSpanXL="3" labelSpanL="3" labelSpanM="3"
+                    adjustLabelSpan="false"
+                    emptySpanXL="2" emptySpanL="2" emptySpanM="2"
+                    columnsXL="2" columnsL="2" columnsM="2">
+
+                    <!-- Equipment -->
+                    <Label text="Equipment (EQUI-EQUNR)" required="true"/>
+                    <Input id="idEquipment" placeholder="Enter Equipment" />
+
+                    <!-- Run -->
+                    <Label text="Run (ZRUN_NAME)" required="true"/>
+                    <Input id="idRun" placeholder="Enter Run Name" />
+
+                    <!-- KM -->
+                    <Label text="KM (ZLAPDISTANCE)" required="true"/>
+                    <Input id="idKM" placeholder="Enter KM" type="Number"/>
+
+                </form:SimpleForm>
+            </Panel>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
