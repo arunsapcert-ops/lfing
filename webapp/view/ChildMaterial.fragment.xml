@@ -39,7 +39,7 @@
             </l:content>
         </l:Grid>
         <buttons>
-            <Button id="_IDGenButtonceq" text = "{i18n>CLOSE}" press = "oncloseeqDialog" type = "Reject"/>
+            <Button id="_IDGenButtonceq" text = "{i18n>CLOSE}" press = "oncloseeeqDialog" type = "Reject"/>
             <Button id="_IDGenButtonceqs" text = "{i18n>SAVE}" press = "onDismantleConfirmation" type = "Accept"/>
         </buttons>
     </Dialog>

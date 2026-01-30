@@ -22,23 +22,34 @@ sap.ui.define([
                 return;
             }
 
-            // --- 1. Construct the path for a specific entry ---
-            // This is the key change. We build a single path string
-            // that includes the key properties directly, as required by the OData service.
+
             var sPath = "/ZLIFING10Set(IEquipment='" + sIEquipment + "',IRun='" + sIRun + "',IKm='" + sIKm + "')";
 
-            // --- 2. Call backend to perform a GET request (read) ---
-            // The read method now uses the constructed path to access a single entry.
+
             this.oModel.read(sPath, {
                 success: function (oData, oResponse) {
                     console.log("Backend response:", oResponse);
                     // Handle success response from the backend
-                    if (oData) {
-                        MessageToast.show("Data found successfully!");
-                    } else {
+                    // if (oData) {
+                    //     MessageToast.show("Data found successfully!");
+                    // } else {
+                    //     MessageBox.error("No data found for the given criteria.");
+                    // } //
+                    if (!oData) {
                         MessageBox.error("No data found for the given criteria.");
+                        return;
                     }
-                },
+                    
+                    if (oData.ReturnCode === "OK") {
+                        MessageToast.show(oData.ReturnMessage || "Operation successful");
+                        var oView = this.getView();
+            oView.byId("idEquipment").setValue("");
+            oView.byId("idRun").setValue("");
+            oView.byId("idKM").setValue("");
+                    } else {
+                        MessageBox.error(oData.ReturnMessage || "Operation failed");
+                    }
+                }.bind(this),
                 error: function (oError) {
                     // Handle error response from the backend
                     MessageBox.error("An error occurred during the read operation.");

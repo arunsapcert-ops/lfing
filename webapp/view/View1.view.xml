@@ -8,7 +8,7 @@
     	    </GenericTile>
         <GenericTile id="_IDGenGenericTile2" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onLmPress" header="{i18n>Lifing Management}">
 	        </GenericTile>
-        <GenericTile id="_IDGenGenericTile3" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onSnopress" header="{i18n>Serial Number Creation}">
+        <GenericTile id="_IDGenGenericTile3" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onSnopress" header="{i18n>Equipment Creation}">
 	        </GenericTile>
         <GenericTile id="_IDGenGenericTile6" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onHmgtpress" header="{i18n>History Management}">
 	        </GenericTile>
@@ -18,3 +18,5 @@
       </content>
     </Page>
 </mvc:View>
+
+<!--  -->

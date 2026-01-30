@@ -12,32 +12,43 @@
 				 </ComboBox>
          <HBox id="idMatBox" width="20%" alignItems="Center" justifyContent="Center">
     				<Label id="_IDMatLabel3" text="{i18n>Material:}" class="sapUiSmallMarginEnd" />
-				    <SearchField id="_IDMatSearchField" search=".onSearch" />
+				    <SearchField id="_IDMatSearchField" search=".onSearch" enabled="false" />
 		    	</HBox>
-        
+        <core:Icon 
+                    id="idTrafficLightIcon"                    
+                    src="sap-icon://circle-task-2"
+                    color="Positive"
+                    visible="false"
+                    class="sapUiSmallMarginBegin"/>
                  <ToolbarSpacer id="_IDGenToolbarSpacersno"/>
                  <Button id="idCreationButton" press="OnPressCreation" text="Creation" enabled="false"></Button>
-                 <Button id="idAddButton1" icon="sap-icon://add" type="Transparent" press="OnAddSnoMaterial" enabled="false"></Button>
+                 <Button id="idMovementButton" press="onOpenMovement" text="Movement" enabled="false"></Button>
+                 <!-- <Button id="idAddButton1" icon="sap-icon://add" type="Transparent" press="OnAddSnoMaterial" enabled="false"></Button> -->
 			</Toolbar>
 	  </customHeader>
       <content>
-        <Table id="idserialNoCreateTable" inset="false" items="{matList>/}" growing="true" growingThreshold="100" growingScrollToLoad="true" mode="MultiSelect">
+        <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect">
             <columns>
-                <Column id="_IDGenColumne" width="12em" visible="false">
+                <Column id="_IDGenColumne" width="8em" visible="true">
                   <Text id="_IDGenTexte" text="{i18n>Equipment}" />
                 </Column>
-                <Column id="_IDGenColumnm" width="12em">
+                <Column id="_IDGenColumnm" width="8em">
                   <Text id="_IDGenTextma" text="{i18n>Material}" />
                 </Column>
-                <Column id="_IDGenColumnd"
+                <!-- <Column id="_IDGenColumnd"
                     minScreenWidth="Tablet"
                     demandPopin="true" visible="false">
                   <Text id="_IDGenTextd" text="{i18n>Description}" />
-                </Column>
-                <Column id="_IDGenColumns"
+                </Column> -->
+                <Column id="_IDGenColumns" width="7em"
                     minScreenWidth="Tablet"
                     demandPopin="true">
                   <Text id="_IDGenTexts" text="{i18n>Serial Number}" />
+                </Column>
+                <Column id="_IDGenColumnNotes" width="8em"
+                    minScreenWidth="Tablet"
+                    demandPopin="true">
+                  <Text id="_IDGenTextNote" text="{i18n>Note}" />
                 </Column>
                 </columns>
                 <items>
@@ -45,8 +56,12 @@
                     <cells>
                         <Text id="_IDGenText9" text="{matList>Equipment}"/>
                         <Text id="_IDGenText6" text="{matList>Material}"/>
-                        <Text id="_IDGenText7" text="{matList>Desc}"/>
-                        <Text id="_IDGenText8" text="{matList>snumber}"/>
+                        <!-- <Text id="_IDGenText7" text="{matList>Desc}"/> -->
+                        <!-- <Text id="_IDGenText8" text="{matList>snumber}"/> -->
+                        <Input id="_IDGenInput" value="{matList>snumber}" 
+                        />
+                       <Input id="_IDGenInput1" value="{matList>Note}"
+                        />
                     </cells>
                    </ColumnListItem>
                 </items>

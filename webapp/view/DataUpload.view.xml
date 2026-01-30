@@ -11,9 +11,9 @@
         title="RunLap Data Upload"
         headerExpanded="true">
         <f:title>
-            <f:DynamicPageTitle>
+            <f:DynamicPageTitle id="_IDGenDynamicPageTitle">
                 <f:heading>
-                    <Title text="RunLap Data Upload" level="H1"/>
+                    <Title id="_IDGenTitle" text="RunLap Data Upload" level="H1"/>
                 </f:heading>
                 <f:actions>
                     <Button
@@ -27,7 +27,7 @@
         </f:title>
 
         <f:content>
-            <Panel
+            <Panel id="_IDGenPanel"
                 headerText="Upload Data"
                 class="sapUiResponsiveContentPadding">
                 <form:SimpleForm
@@ -40,15 +40,15 @@
                     columnsXL="2" columnsL="2" columnsM="2">
 
                     <!-- Equipment -->
-                    <Label text="Equipment (EQUI-EQUNR)" required="true"/>
+                    <Label id="_IDGenLabel10" text="Equipment" required="true"/>
                     <Input id="idEquipment" placeholder="Enter Equipment" />
 
                     <!-- Run -->
-                    <Label text="Run (ZRUN_NAME)" required="true"/>
+                    <Label id="_IDGenLabel11" text="Run" required="true"/>
                     <Input id="idRun" placeholder="Enter Run Name" />
 
                     <!-- KM -->
-                    <Label text="KM (ZLAPDISTANCE)" required="true"/>
+                    <Label id="_IDGenLabel12" text="KM" required="true"/>
                     <Input id="idKM" placeholder="Enter KM" type="Number"/>
 
                 </form:SimpleForm>

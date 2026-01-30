@@ -61,6 +61,15 @@
                     "odataVersion": "2.0"
                 }
             },
+            "sixthService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING6_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
             "seventhService": {
                 "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING7_SRV/",
                 "type": "OData",
@@ -160,6 +169,11 @@
                 "preload": true,
                 "settings": {}
             },
+            "sixthModel": {
+                "dataSource": "sixthService",
+                "preload": true,
+                "settings": {}
+            },                 
             "seventhModel": {
                 "dataSource": "seventhService",
                 "preload": true,
