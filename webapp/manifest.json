@@ -105,6 +105,15 @@
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "2.0"
                 }
+            },
+            "eleventhService": {
+                "uri": "/sap/opu/odata/sap/ZPM_FIORI_LIFING11_SRV/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
             }
         }
     },
@@ -191,6 +200,11 @@
             },
             "tenthModel": {
                 "dataSource": "tenthService",
+                "preload": true,
+                "settings": {}
+            },
+            "eleventhModel": {
+                "dataSource": "eleventhService",
                 "preload": true,
                 "settings": {}
             }

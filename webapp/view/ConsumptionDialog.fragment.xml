@@ -1,0 +1,18 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog id="idConsumptionDialog" title="Consumption" draggable="true" resizable="true">
+    <content>
+      <VBox class="sapUiSmallMargin">
+        <Label text="Cost Center" required="true"/>
+        <Input id="idConsumptionCostCenter" placeholder="Enter Cost Center"/>
+        <Label text="Order" required="true" class="sapUiSmallMarginTop"/>
+        <Input id="idConsumptionOrder" placeholder="Enter Order"/>
+      </VBox>
+    </content>
+    <beginButton>
+      <Button text="Save" type="Emphasized" press="onSaveConsumption"/>
+    </beginButton>
+    <endButton>
+      <Button text="Cancel" press="onCloseConsumption"/>
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

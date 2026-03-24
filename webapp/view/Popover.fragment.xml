@@ -14,6 +14,13 @@
              
                 <Label id="_IDGenLabel1Sno" text="{i18n>Serial Number}" visible="{popOver>/popOverSource}" />
                 <Input id = "idsnoinput" value="" visible="{popOver>/popOverSource}"/>
+
+                <Label id="_IDGenLabelStorageLoc" text="Storage Location" visible="{= !${popOver>/popOverSource}}" />
+                <Input id="idStorageLocInput" value="" placeholder="Storage Location (optional)" visible="{= !${popOver>/popOverSource}}" maxLength="4"/>
+                
+				<Label id="_IDGenLabelStorageLocStruct" text="Storage Location" visible="{popOver>/popOverSource}" />
+                <Input id="idStorageLocInputStruct" value="" placeholder="Storage Location (optional)" visible="{popOver>/popOverSource}" maxLength="4"/>
+
             </f:content>
         </f:SimpleForm>
 		<footer>

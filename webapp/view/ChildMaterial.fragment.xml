@@ -6,6 +6,8 @@
     <Dialog id="_IDGenDialogChild" title = "{i18n>CHOOSE SON EQUIPMENT}">
         <l:Grid defaultSpan = "L12 M12 S12" width = "auto" id = "idGrid1123">
             <l:content>
+            <Label id="_IDGenDismantleStorageLabel" text="Storage Location"/>
+                <Input id="idDismantleStorageInput" width="14rem" placeholder="Enter storage location" />
                 <Table id="idChildEquTable" inset="false" mode="MultiSelect" items="{ChildList>/}">
                     <columns>
                         <Column id="_IDGenColumn21" width="12em">

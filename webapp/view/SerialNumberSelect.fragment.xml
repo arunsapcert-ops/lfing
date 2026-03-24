@@ -70,5 +70,8 @@
         <beginButton>
           <Button id="_IDGenButton4" text="OK" press="onSelectSerialNumberPress"/>
         </beginButton>
+        <endButton>
+          <Button id="_IDGenButtonClose" text="Close" press="onCloseMatListDialog"/>
+        </endButton>
     </Dialog>
 </core:FragmentDefinition>

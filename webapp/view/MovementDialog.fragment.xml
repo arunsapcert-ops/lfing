@@ -2,7 +2,7 @@
   <Dialog id="idMovementDialog" title="Movement" draggable="true" resizable="true">
     <content>
       <VBox class="sapUiSmallMargin">
-        <Label text="Storage Location" required="true"/>
+        <Label text="Storage Location" required="{uiState>/movementStorageRequired}"/>
         <Input id="idMovementStorageLoc" placeholder="Enter Storage Location" maxLength="4"/>
       </VBox>
     </content>

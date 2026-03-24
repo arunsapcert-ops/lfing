@@ -1,0 +1,27 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+    <Popover
+        id="replacePopover"
+        title="Replace"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--footer"
+        placement="Bottom">
+        <f:SimpleForm id="replaceSimpleForm">
+            <f:content>
+                <Label text="{i18n>Material}" required="true" />
+                <Input id="idReplaceMatInput" value="" />
+                <Label text="Source Storage Location" required="true" />
+                <Input id="idReplaceSourceStorageInput" value="" maxLength="4" />
+                <Label text="Destination Storage Location" required="true" />
+                <Input id="idReplaceDestinationStorageInput" value="" maxLength="4" />
+            </f:content>
+        </f:SimpleForm>
+        <footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button text="Search" press=".handleReplaceSearchPress" />
+            </OverflowToolbar>
+        </footer>
+    </Popover>
+</core:FragmentDefinition>

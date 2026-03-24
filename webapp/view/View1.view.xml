@@ -3,12 +3,13 @@
     xmlns="sap.m">
     <Page id="pageid" title="{i18n>title}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
       <content>
-        <HBox id="_IDGenVBox2" alignItems="Center" justifyContent="Center" height= "75%">
+        <!-- <HBox id="_IDGenVBox2" alignItems="Center" justifyContent="Center" height= "75%"> -->
+        <HBox id="_IDGenVBox2" alignItems="Center" justifyContent="Center" width="100%" height="100%">
         <GenericTile id="_IDGenGenericTile1" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onScPress" header="{i18n>Structure Creation}">
     	    </GenericTile>
         <GenericTile id="_IDGenGenericTile2" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onLmPress" header="{i18n>Lifing Management}">
 	        </GenericTile>
-        <GenericTile id="_IDGenGenericTile3" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onSnopress" header="{i18n>Equipment Creation}">
+        <GenericTile id="_IDGenGenericTile3" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onSnopress" header="{i18n>Equipment Management}">
 	        </GenericTile>
         <GenericTile id="_IDGenGenericTile6" class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" press="onHmgtpress" header="{i18n>History Management}">
 	        </GenericTile>

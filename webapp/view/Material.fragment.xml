@@ -6,6 +6,11 @@
     <Dialog id="_IDGenDialogEq" title = "{i18n>CHOOSE EQUIPMENT}">
         <l:Grid defaultSpan = "L12 M12 S12" width = "auto" id = "idGrid112">
             <l:content>
+                            <!-- <VBox width="100%" class="sapUiSmallMarginBottom">
+                    <Label text="Storage Location (optional)" />
+                    <Input id="idStorageLocInputEq" maxLength="4" />
+                </VBox> -->
+
                 <Table id="idequCreateTable" inset="false" mode="SingleSelectMaster" items="{eList>/}" selectionChange="onEquipmentSelection">
                     <columns>
                         <Column id="_IDGenColumn11" width="12em">

@@ -1,0 +1,75 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Dialog id="_IDGenDialogReplace" title="Material List">
+      <content>
+        <Table id="idReplaceSerialNoSelect" inset="false" items="{snumberList>/}" 
+          growing="true" growingThreshold="100" growingScrollToLoad="true" mode="SingleSelectLeft">
+            <columns>
+                <Column width="12em">
+                  <Text text="{i18n>Equipment}" />
+                </Column>
+                <Column width="12em">
+                  <Text text="{i18n>Material}" />
+                </Column>
+                <Column width="12em">
+                  <Text text="{i18n>Description}" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>Serial Number}" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>Functional Group}" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>Position}" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>Note}" />
+                </Column>
+                <Column>
+                  <Text text="KM" />
+                </Column>
+                <Column>
+                  <Text text="Revision Number" />
+                </Column>
+                <Column>
+                  <Text text="Revision KM" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>MAX}" />
+                </Column>
+                <Column>
+                  <Text text="{i18n>MIN}" />
+                </Column>
+                </columns>
+                <items>
+                  <ColumnListItem vAlign="Middle" >
+                    <cells>
+                        <Text text="{snumberList>Zequnr}"/>
+                        <Text text="{snumberList>Zmatnr}"/>
+                        <Text text="{snumberList>Zmaktx}"/>
+                        <Text text="{snumberList>Zsernr}"/>
+                        <Text text="{snumberList>ZfunctionalGroup}"/>
+                        <Text text="{snumberList>Zposition}"/>
+                        <Text text="{snumberList>Note}"/>
+                        <Text text="{snumberList>Zkm2}"/>
+                        <Text text="{snumberList>ZrevisionNumber}"/>
+                        <Text text="{snumberList>ZrevisionKm}"/>
+                        <Text text="{snumberList>ZkmMax}"/>
+                        <Text text="{snumberList>ZkmMin}"/>
+                    </cells>
+                   </ColumnListItem>
+                </items>
+           </Table>
+        </content>
+        <beginButton>
+          <Button text="OK" press="onSelectReplaceSerialNumberPress"/>
+        </beginButton>
+        <endButton>
+          <Button text="Close" press="onCloseReplaceMatListDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

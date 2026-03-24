@@ -21,19 +21,58 @@
                     visible="false"
                     class="sapUiSmallMarginBegin"/>
                  <ToolbarSpacer id="_IDGenToolbarSpacersno"/>
-                 <Button id="idCreationButton" press="OnPressCreation" text="Creation" enabled="false"></Button>
+                 <Button id="idCreationButton" press="OnCreation" text="Creation" enabled="false"></Button>
+                 <Button id="idRemoveButton" press="onOpenRemove" text="Remove" enabled="false"></Button>
                  <Button id="idMovementButton" press="onOpenMovement" text="Movement" enabled="false"></Button>
+                 <Button id="idConsumptionButton" press="onOpenConsumption" text="Consumption" enabled="false"></Button>
                  <!-- <Button id="idAddButton1" icon="sap-icon://add" type="Transparent" press="OnAddSnoMaterial" enabled="false"></Button> -->
 			</Toolbar>
 	  </customHeader>
       <content>
-        <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect">
+      <ScrollContainer width="100%" height="100%" horizontal="true" vertical="true" focusable="true" class="serialNoTableScroll">
+        <!-- <Table id="idserialNoCreateTable" inset="false" width="115em" fixedLayout="false" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
+        <!-- <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
+            <!-- <VBox width="100%" class="serialNoTableScroll"> -->
+        <Table id="idserialNoCreateTable" inset="false" width="100%" fixedLayout="true" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect" class="serialNoWideTable">
             <columns>
                 <Column id="_IDGenColumne" width="8em" visible="true">
                   <Text id="_IDGenTexte" text="{i18n>Equipment}" />
                 </Column>
                 <Column id="_IDGenColumnm" width="8em">
                   <Text id="_IDGenTextma" text="{i18n>Material}" />
+                </Column>
+                <Column id="_IDGenColumnmdesc" width="12em">
+                  <Text id="_IDGenTextmdesc" text="{i18n>Description}" />
+                </Column>
+                <Column id="_IDGenColumnfg" width="10em">
+                  <Text id="_IDGenTextfg" text="Functional Group" />
+                </Column>
+                <Column id="_IDGenColumnPos" width="8em">
+                  <Text id="_IDGenTextpos" text="{i18n>Position}" />
+                </Column>
+                <Column id="_IDGenColumnNote" width="8em">
+                  <Text id="_IDGenTextnote" text="{i18n>Note}" />
+                </Column>
+                <Column id="_IDGenColumnkm" width="6em">
+                  <Text id="_IDGenTextkm" text="KM" />
+                </Column>
+                <Column id="_IDGenColumnRevNo" width="9em">
+                  <Text id="_IDGenTextRevNo" text="Revision Number" />
+                </Column>
+                <Column id="_IDGenColumnRevKm" width="8em">
+                  <Text id="_IDGenTextRevKm" text="Revision KM" />
+                </Column>
+                <Column id="_IDGenColumnKmRevision" width="8em">
+                  <Text id="_IDGenTextKmRevision" text="KM_Revision" />
+                </Column>
+                <Column id="_IDGenColumnKmMax" width="7em">
+                  <Text id="_IDGenTextKmMax" text="KM_MAX" />
+                </Column>
+                <Column id="_IDGenColumnKmMin" width="7em">
+                  <Text id="_IDGenTextKmMin" text="KM_MIN" />
+                </Column>
+                <Column id="_IDGenColumnStatus" width="7em">
+                  <Text id="_IDGenTextStatus" text="Status" />
                 </Column>
                 <!-- <Column id="_IDGenColumnd"
                     minScreenWidth="Tablet"
@@ -45,27 +84,38 @@
                     demandPopin="true">
                   <Text id="_IDGenTexts" text="{i18n>Serial Number}" />
                 </Column>
-                <Column id="_IDGenColumnNotes" width="8em"
-                    minScreenWidth="Tablet"
-                    demandPopin="true">
-                  <Text id="_IDGenTextNote" text="{i18n>Note}" />
-                </Column>
                 </columns>
                 <items>
                   <ColumnListItem id="_IDGenColumnListItem" vAlign="Middle" >
                     <cells>
                         <Text id="_IDGenText9" text="{matList>Equipment}"/>
                         <Text id="_IDGenText6" text="{matList>Material}"/>
+                        <Text id="_IDGenTextMatDesc" text="{matList>MaterialDescription}"/>
+                        <Input id="_IDGenTextFg" value="{matList>FunctionalGroup}" enabled="{= ${matList>CreationEditable} === true }"/>
+                        <Input id="_IDGenTextPosition" value="{matList>Position}" enabled="{= ${matList>CreationEditable} === true }"/>
+                        <Input id="_IDGenTextNote" value="{matList>Note}" enabled="{= ${matList>CreationEditable} === true }"/>
+                        <Text id="_IDGenTextKm" text="{matList>km}"/>
+                        <Text id="_IDGenTextRevisionNo" text="{matList>RevisionNumber}"/>
+                        <Text id="_IDGenTextRevisionKm" text="{matList>RevisionKm}"/>
+                        <Text id="_IDGenTextKmRevision1" text="{matList>KmRevision}"/>
+                        <Text id="_IDGenTextKmMax1" text="{matList>KmMax}"/>
+                        <Text id="_IDGenTextKmMin1" text="{matList>KmMin}"/>
+                        <core:Icon
+                          id="_IDGenStatusTrafficLight"
+                          src="sap-icon://circle-task-2"
+                          size="1rem"
+                          color="{path: 'matList>StatusCode', formatter: '.statusCodeToColor'}"
+                          visible="{matList>ShowStatus}"
+                          tooltip="{matList>Status}" />
                         <!-- <Text id="_IDGenText7" text="{matList>Desc}"/> -->
                         <!-- <Text id="_IDGenText8" text="{matList>snumber}"/> -->
-                        <Input id="_IDGenInput" value="{matList>snumber}" 
-                        />
-                       <Input id="_IDGenInput1" value="{matList>Note}"
+                        <Input id="_IDGenInput" value="{matList>snumber}" enabled="{= !${matList>snumber} }"
                         />
                     </cells>
                    </ColumnListItem>
-                </items>
+                </items>                
         </Table>
+        </ScrollContainer>
       </content>
      </Page>
 </mvc:View>

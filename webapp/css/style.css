@@ -1,1 +1,12 @@
 /* Enter your custom styles here */
+.yellowTrafficLight {
+    color: #F8D71C !important;
+}
+
+.serialNoTableScroll {
+    overflow-x: auto;
+}
+
+.serialNoWideTable .sapMListTbl {
+    min-width: 115em;
+}
