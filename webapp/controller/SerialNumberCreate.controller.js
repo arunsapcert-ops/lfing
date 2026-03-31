@@ -984,6 +984,12 @@ sap.ui.define([
                 var matSelected = oEvent.getSource().getValue();
                 var that = this;
                 var oDataModel = this.getOwnerComponent().getModel("fifthModel");
+                var oMatListModel = this.getView().getModel("matList");
+                oMatListModel.setData({ root: [] });
+                oMatListModel.updateBindings(true);
+                if (this.oTable && this.oTable.removeSelections) {
+                    this.oTable.removeSelections(true);
+                }
                 var oFilter = new sap.ui.model.Filter({
                     filters: [
                         new sap.ui.model.Filter({
@@ -1030,6 +1036,8 @@ sap.ui.define([
                         var matList = [];
                         var bHasKO = false;
                         var sKoMessage = "";
+                        var bIsYellowStatus = sFirstRowReturnCode === "Y";
+                        var aRowsToDisplay = bIsYellowStatus ? aAllResults : aAllResults.slice(1);
 
                         // aAllResults.forEach(function (data) {
                         //     var sCode = String(data.ERETURNCODE || "").toUpperCase().trim();
@@ -1063,7 +1071,8 @@ sap.ui.define([
                         //     });
                         // });
 
-                        aAllResults.forEach(function (data) {
+                        // aAllResults.forEach(function (data) {
+                        aRowsToDisplay.forEach(function (data) {
                             var sCode = String(data.Zreturn || data.ERETURNCODE || "").toUpperCase().trim();
                             if (sCode === "KO" && !bHasKO) {
                                 bHasKO = true;
@@ -1097,6 +1106,7 @@ sap.ui.define([
                             });
                         });
 
+                        if (bIsYellowStatus) {
                         // Duplicate the first table row Zquan times (one row per serial / unit)
                         var vZquan = aAllResults[0] && aAllResults[0].Zquan;
                         var iZquan = typeof vZquan === "number" ? vZquan : parseFloat(String(vZquan != null ? vZquan : "").replace(",", "."), 10);
@@ -1114,15 +1124,18 @@ sap.ui.define([
                             }
                             matList = aExpanded.concat(matList.slice(1));
                         }
+                    }
 
                         if (bHasKO) {
                             MessageBox.show(sKoMessage);
                         }
 
                         var mergedData = [...that.getView().getModel("matList").getData().root, ...matList];
-                        that._setFirstRowStatusVisibility(mergedData);
+                        // that._setFirstRowStatusVisibility(mergedData);
+                        that._applyStatusVisibility(mergedData, sFirstRowReturnCode);
                         that.getView().byId("_IDMatSearchField").setValue();
-                        that.getView().getModel("matList").getData().root = mergedData;
+                        // that.getView().getModel("matList").getData().root = mergedData;
+                        that.getView().getModel("matList").setData({ root: matList });
                         that.getView().getModel("matList").updateBindings();
                         that.getView().setBusy(false);
                     },
@@ -1131,6 +1144,17 @@ sap.ui.define([
                         that.getView().setBusy(false);
                         MessageBox.error("Error in OData call");
                     }
+                });
+            },
+
+            _applyStatusVisibility: function (aRows, sStatusCode) {
+                if (!Array.isArray(aRows)) {
+                    return;
+                }
+                var sCode = String(sStatusCode || "").toUpperCase().trim();
+                var bShowAllRows = sCode === "R" || sCode === "G";
+                aRows.forEach(function (oRow, iIndex) {
+                    oRow.ShowStatus = bShowAllRows ? true : iIndex === 0;
                 });
             },
 

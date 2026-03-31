@@ -58,7 +58,8 @@
                         <Text id="_IDGenText172" text="{snumberList>Note}"/>
                         <Text id="_IDGenText182" text="{snumberList>Zkm2}"/>
                         <Text id="_IDGenText193" text="{snumberList>ZrevisionNumber}"/>
-                        <Text id="_IDGenText194" text="{snumberList>ZrevisionKm}"/>
+                        <!-- <Text id="_IDGenText194" text="{snumberList>ZrevisionKm}"/> -->
+                        <Text id="_IDGenText194" text="{snumberList>ZkmRevisione}"/>
                         <Text id="_IDGenText173" text="{snumberList>ZkmMax}"/>
                         <Text id="_IDGenText163" text="{snumberList>ZkmMin}"/>                        
                         <!-- <Text id="_IDGenText183" text="{snumberList>ZtracciabilitaSn}"/> -->

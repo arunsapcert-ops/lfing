@@ -25,7 +25,8 @@ sap.ui.define([
                 var popOverModel = new sap.ui.model.json.JSONModel();
                 this.getView().setModel(popOverModel, "popOver");
                 this.getView().setModel(new sap.ui.model.json.JSONModel({
-                    isLifingManagement: false
+                    isLifingManagement: false,
+                    kmAlert: 500
                 }), "app");
                 this.lifingParameter = "L";
                 this.mGroupData = {};
@@ -80,6 +81,8 @@ sap.ui.define([
                     this.getView().byId("_IDGenColumnNextRun").setVisible(false);
                     this.getView().byId("_IDGenColumnKmNextRun").setVisible(false);
                     this.getView().byId("_IDGenColumnTraffic").setVisible(false);
+                    this.getView().byId("_IDGenColumn71").setVisible(false);
+                    this.getView().byId("_IDGenColumn72").setVisible(false);
                     this.getView().getModel("app").setProperty("/isLifingManagement", false);
                 } else if (oEvent.getParameters().name == "BOMCreate") {
                     this.getView().byId("idBomBox").setVisible(true);
@@ -101,6 +104,8 @@ sap.ui.define([
                     this.getView().byId("_IDGenColumnNextRun").setVisible(false);
                     this.getView().byId("_IDGenColumnKmNextRun").setVisible(false);
                     this.getView().byId("_IDGenColumnTraffic").setVisible(false);
+                    this.getView().byId("_IDGenColumn71").setVisible(true);
+                    this.getView().byId("_IDGenColumn72").setVisible(true);
                     this.getView().getModel("app").setProperty("/isLifingManagement", false);
                 } else if (oEvent.getParameters().name == "LifingManagement") {
                     this.getView().byId("idBomBox").setVisible(true);
@@ -131,6 +136,8 @@ sap.ui.define([
                     this.getView().byId("_IDGenColumnNextRun").setVisible(true);
                     this.getView().byId("_IDGenColumnKmNextRun").setVisible(true);
                     this.getView().byId("_IDGenColumnTraffic").setVisible(true);
+                    this.getView().byId("_IDGenColumn71").setVisible(true);
+                    this.getView().byId("_IDGenColumn72").setVisible(true);
                 }
             },
 
@@ -773,26 +780,38 @@ sap.ui.define([
 
 
                                 // --- traffic light logic ---
-                                let traffic = "G"; // default
+                                // let traffic = "G"; // default
 
-                                if (kmValue < kmMin) {
-                                    traffic = "G"; // Green
-                                } else if (kmValue >= kmMin && kmValue < kmMax) {
-                                    traffic = "Y"; // Yellow
-                                } else if (kmValue >= kmMax) {
-                                    traffic = "R"; // Red
-                                }
+                                // if (kmValue < kmMin) {
+                                //     traffic = "G"; // Green
+                                // } else if (kmValue >= kmMin && kmValue < kmMax) {
+                                //     traffic = "Y"; // Yellow
+                                // } else if (kmValue >= kmMax) {
+                                //     traffic = "R"; // Red
+                                // }
 
-                                let trafficIcon = "sap-icon://status-positive";
-                                let trafficColor = "Positive";
+                                // let trafficIcon = "sap-icon://status-positive";
+                                // let trafficColor = "Positive";
 
-                                if (traffic === "Y") {
-                                    trafficIcon = "sap-icon://status-critical";
-                                    trafficColor = "Critical";
-                                } else if (traffic === "R") {
-                                    trafficIcon = "sap-icon://status-negative";
-                                    trafficColor = "Negative";
-                                }
+                                // if (traffic === "Y") {
+                                //     trafficIcon = "sap-icon://status-critical";
+                                //     trafficColor = "Critical";
+                                // } else if (traffic === "R") {
+                                //     trafficIcon = "sap-icon://status-negative";
+                                //     trafficColor = "Negative";
+                                // }
+                                const kmAlert = that._getKmAlertValue();
+                                const kmAfterLastRevision = normalize(node.KmRevisione);
+                                const { traffic, icon: trafficIcon, color: trafficColor } =
+                                    that._computeTraffic({
+                                        revisionNumber: node.RevisionNumber,
+                                        max: kmMax,
+                                        min: kmMin,
+                                        km: normalize(node.Km),
+                                        revisionKm: normalize(node.RevisionKm),
+                                        kmAfterLastRevision,
+                                        kmAlert
+                                    });
                                 return {
                                     fg: node.FunctionalGroup || node.fg || "",
                                     level: node.Position || '',
@@ -810,7 +829,7 @@ sap.ui.define([
                                     NextRun: node.NextRun,
                                     KmNextRun: node.KmNextRun,
                                     TrafficLight: traffic,
-                                    TrafficIcon: "sap-icon://circle-task-2",       // new
+                                    TrafficIcon: trafficIcon,       // new
                                     TrafficColor: trafficColor,
                                     Father: node.Father || node.father || "",
                                     children: node.children ? node.children.map(remapFields) : []
@@ -1119,6 +1138,11 @@ sap.ui.define([
                 if (!aRoot || aRoot.length === 0) {
                     this.getView().byId("_IDGenComboBox1").setEnabled(true);
                 }
+            },
+
+            _getKmAlertValue: function () {
+                const v = parseInt(this.getView().getModel("app")?.getProperty("/kmAlert"), 10);
+                return Number.isFinite(v) && v > 0 ? v : 500;
             },
 
 
@@ -3047,10 +3071,20 @@ sap.ui.define([
 
 
 
-                let traffic = "G";
-                if (kmVal < kmMin) traffic = "G";
-                else if (kmVal >= kmMin && kmVal < kmMax) traffic = "Y";
-                else traffic = "R";
+                // let traffic = "G";
+                // if (kmVal < kmMin) traffic = "G";
+                // else if (kmVal >= kmMin && kmVal < kmMax) traffic = "Y";
+                // else traffic = "R";
+
+                const { traffic, icon, color } = this._computeTraffic({
+                    revisionNumber: node.RevisionNumber,
+                    max: kmMax,
+                    min: kmMin,
+                    km: toNumber(node.Km),
+                    revisionKm: toNumber(node.RevisionKm),
+                    kmAfterLastRevision,
+                    kmAlert
+                });
 
 
                 return {
@@ -3080,14 +3114,136 @@ sap.ui.define([
 
                     /** Traffic Indicator */
                     TrafficLight: traffic,
-                    TrafficIcon: "sap-icon://status-circle",
-                    TrafficColor: traffic === "G" ? "Success" :
-                        traffic === "Y" ? "Critical" : "Error",
+                    // TrafficIcon: "sap-icon://status-circle",
+                    // TrafficColor: traffic === "G" ? "Success" :
+                    //     traffic === "Y" ? "Critical" : "Error",
+                    TrafficIcon: icon,
+                    TrafficColor: color,
 
                     Father: node.Father || "",
 
                     children: (node.children || []).map(this._remapNodeFields.bind(this))
                 };
+            },
+
+            _computeTraffic: function ({
+                revisionNumber,
+                max,
+                min,
+                km,
+                revisionKm,
+                kmAfterLastRevision,
+                kmAlert
+            }) {
+                // Returns statusCode: 0..5 and a CSS color string
+                let colorCode = 0;
+                const revNo = String(revisionNumber ?? "").trim();
+
+                const nMax = Number(max) || 0;
+                const nMin = Number(min) || 0;
+                const nKm = Number(km) || 0;
+                const nRevKm = Number(revisionKm) || 0;
+                const nKmAfter = Number(kmAfterLastRevision) || 0;
+                const nAlert = Number(kmAlert) || 500;
+
+                const betweenInclusive = (x, a, b) => x >= a && x <= b;
+
+                if (revNo === "000") {
+                    if (nMax === 0 && nRevKm === 0) colorCode = 0;
+                    if (nMax > 0 && nKm < nMax && colorCode <= 1) colorCode = 1;
+                    if (nRevKm > 0 && nKmAfter < nRevKm && colorCode <= 1) colorCode = 1;
+                    if (nMin > 0 && nKm < nMin && colorCode <= 1) colorCode = 2;
+                    if (nRevKm > 0 && betweenInclusive(nKmAfter, nRevKm - nAlert, nRevKm) && colorCode <= 2) colorCode = 3;
+                    if (nMax > 0 && betweenInclusive(nKm, nMax - nAlert, nMax) && colorCode <= 3) colorCode = 4;
+                    if (nMax > 0 && nKm >= nMax && colorCode <= 4) colorCode = 5;
+                    if (nRevKm > 0 && nKmAfter >= nRevKm && colorCode <= 4) colorCode = 5;
+                } else {
+                    if (nMax === 0 && nRevKm === 0) colorCode = 0;
+                    if (nMax > 0 && nKmAfter < nMax && colorCode <= 1) colorCode = 1;
+                    if (nRevKm > 0 && nKmAfter < nRevKm && colorCode <= 1) colorCode = 1;
+                    if (nMin > 0 && nKmAfter < nMin && colorCode <= 1) colorCode = 2;
+                    if (nRevKm > 0 && betweenInclusive(nKmAfter, nRevKm - nAlert, nRevKm) && colorCode <= 2) colorCode = 3;
+                    if (nMax > 0 && betweenInclusive(nKmAfter, nMax - nAlert, nMax) && colorCode <= 3) colorCode = 4;
+                    if (nMax > 0 && nKmAfter >= nMax && colorCode <= 4) colorCode = 5;
+                    if (nRevKm > 0 && nKmAfter >= nRevKm && colorCode <= 4) colorCode = 5;
+                }
+
+                const colorMap = {
+                    0: "#8a8a8a", // gray
+                    1: "#107e3e", // green
+                    2: "#800080", // purple
+                    3: "#f0ab00", // yellow
+                    4: "#e9730c", // orange
+                    5: "#bb0000"  // red
+                };
+
+                return {
+                    traffic: colorCode,
+                    icon: "sap-icon://circle-task-2",
+                    color: colorMap[colorCode] || colorMap[0]
+                };
+            },
+
+            onKmAlertChange: function (oEvent) {
+                const oInput = oEvent.getSource();
+                const sVal = (oInput.getValue() || "").trim();
+                let iVal = parseInt(sVal, 10);
+
+                if (!Number.isFinite(iVal) || iVal <= 0) {
+                    iVal = 500;
+                    oInput.setValue(String(iVal));
+                    MessageToast.show("KM Allert must be a positive number. Reset to 500.");
+                }
+
+                this.getView().getModel("app").setProperty("/kmAlert", iVal);
+                this._recalculateTrafficIndicators();
+            },
+
+            _getKmAlertValue: function () {
+                const v = parseInt(this.getView().getModel("app")?.getProperty("/kmAlert"), 10);
+                return Number.isFinite(v) && v > 0 ? v : 500;
+            },
+
+             _recalculateTrafficIndicators: function () {
+                const oModel = this.getView().getModel("mList");
+                const oData = oModel?.getData();
+                if (!oData || !Array.isArray(oData.root)) return;
+
+                const kmAlert = this._getKmAlertValue();
+                const toNumber = (v) => {
+                    if (v == null || v === "") return 0;
+                    const s = String(v).replace(/ km/i, "").trim().replace(/\./g, "").replace(",", ".");
+                    return Number(s) || 0;
+                };
+
+                const walk = (arr) => {
+                    arr.forEach(node => {
+                        if (!node) return;
+                        const res = this._computeTraffic({
+                            revisionNumber: node.RevisionNumber,
+                            max: toNumber(node.KmMax ?? node.max),
+                            min: toNumber(node.KmMin ?? node.min),
+                            km: toNumber(node.Km),
+                            revisionKm: toNumber(node.RevisionKm),
+                            kmAfterLastRevision: toNumber(node.KmRevisione),
+                            kmAlert
+                        });
+
+                        node.TrafficLight = res.traffic;
+                        node.TrafficIcon = res.icon;
+                        node.TrafficColor = res.color;
+
+                        if (Array.isArray(node.children) && node.children.length) walk(node.children);
+                    });
+                };
+
+                walk(oData.root);
+                oModel.updateBindings(true);
+
+                const oBinding = this.oTable?.getBinding("rows");
+                if (oBinding) {
+                    oBinding.refresh(true);
+                }
             },
 
 
@@ -3725,6 +3881,7 @@ sap.ui.define([
                                     sNo: node.SerialNumber || node.sNo || "",
                                     Note: node.Note || "",
                                     KmRevisione: node.KmRevisione || '',
+                                    Revisione: node.KmRevisione || '',
                                     RevisionNumber: node.RevisionNumber || '',
                                     RevisionKm: node.RevisionKm || '',
                                     min: node.KmMin || "",
@@ -3976,6 +4133,7 @@ sap.ui.define([
                     km: oItem.Zkm2 || "",
                     RevisionNumber: oItem.ZrevisionNumber || "",
                     RevisionKm: oItem.ZrevisionKm || "",
+                    Revisione:oItem.ZkmRevisione || "",
                     max: oItem.ZkmMax || "",
                     min: oItem.ZkmMin || "",
                     children: []

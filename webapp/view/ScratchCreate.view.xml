@@ -21,7 +21,7 @@
 					placeholder="Storage Location"
                     enabled="{= ${mList>/root}.length === 0}"
 					width="8rem" />
-                 <u:FileUploader id="fileUploader" name="myFileUpload" width="16rem"
+                 <u:FileUploader id="fileUploader" name="myFileUpload" width="16rem" buttonOnly="true"
 				    tooltip="Upload your file to the local server"
 				    change="handleUploadPress"
                     value="{app>/selectedFileName}"
@@ -33,8 +33,8 @@
 					selectedKey="Yes"
                     change="onLifingSelectChange"
 					width="6rem">
-					<core:Item key="Yes" text="Yes" />
-					<core:Item key="No" text="No" />
+					<core:Item id="_IDGenItem" key="Yes" text="Yes" />
+					<core:Item id="_IDGenItem1" key="No" text="No" />
 				 </Select>
                  <HBox id="idBomBox" width="auto" alignItems="Center" justifyContent="Center" class="sapUiTinyMarginBegin">
     				<Label id="_IDGenLabel3" text="Material: " class="sapUiSmallMarginEnd" />
@@ -42,7 +42,7 @@
 		    	</HBox>
 				 <!-- <Button id="_IDGenButton1" text="Material Check" press="onMaterialCheck" enabled="false"></Button> -->
 				 <Button id="_IDGenButtonec" text="Equipment Creation" press="onEquipmentCreation" enabled="false"></Button>
-				 <Button id="_IDGenButtonsave" text="Add" press="onSaveEquipment" enabled="false"></Button>
+				 <Button id="_IDGenButtonsave" text="Installation" press="onSaveEquipment" enabled="false"></Button>
                  <Button id="_IDGenButtondis" text="Dismantle" press="onPressDismantle" enabled="false"></Button>
                  <Button id="_IDGenButtonsno" text="Serial Number Available" press="onPressSno" enabled="true"></Button>
                  <Button id="_IDGenButtonadds" text="Add Existing Structure" press="onPressStructure" enabled="true"></Button>               
@@ -51,6 +51,9 @@
                  <Button id="_IDGenButtonsnr" text="{i18n>Save New Run}" press="onSaveNewRun" enabled="false"></Button>
                  <Button id="_IDGenButtoninst" text="Installation" press="onInstallationPress" visible="{app>/isLifingManagement}" enabled="false"></Button>
                  <Button id="_IDGenButtonreplace" text="Replace" press="onReplacePress" visible="{app>/isLifingManagement}" enabled="false"></Button>
+                 <HBox id="idKmAlertBox" visible="{app>/isLifingManagement}" alignItems="Center" class="sapUiTinyMarginBegin">
+                    <Input id="idKmAlertInput" type="Number" value="{app>/kmAlert}" width="5rem" change="onKmAlertChange" tooltip="KM Allert" />
+                 </HBox>
                 </HBox>
 			</Toolbar>
 		</customHeader>
@@ -137,9 +140,15 @@
                         </t:template>
                     </t:Column>
                     <t:Column id="_IDGenColumn72" width="5rem" showFilterMenuEntry="true" filterProperty="Revisione">
-                        <Label id="_IDGenLabelrevkm" wrapping="true" text="Revision Km"/>
+                        <Label id="_IDGenLabelrevkm" wrapping="true" text="Km after last revision"/>
                         <t:template>
                             <Text id="_IDGenTextrevkm" text="{mList>RevisionKm}"/>
+                        </t:template>
+                    </t:Column>
+                    <t:Column id="_IDGenColumn722" width="5rem" showFilterMenuEntry="true" filterProperty="Revisione">
+                        <Label id="_IDGenLabelrevkm2" wrapping="true" text="Revision KM"/>
+                        <t:template>
+                            <Text id="_IDGenTextrevkm2" text="{mList>Revisione}"/>
                         </t:template>
                     </t:Column>
                     <t:Column id="_IDGenColumn9" width="4rem" showFilterMenuEntry="true" filterProperty="max">

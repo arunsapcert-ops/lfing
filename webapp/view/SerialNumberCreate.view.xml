@@ -34,6 +34,7 @@
         <!-- <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
             <!-- <VBox width="100%" class="serialNoTableScroll"> -->
         <Table id="idserialNoCreateTable" inset="false" width="100%" fixedLayout="true" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect" class="serialNoWideTable">
+            
             <columns>
                 <Column id="_IDGenColumne" width="8em" visible="true">
                   <Text id="_IDGenTexte" text="{i18n>Equipment}" />
@@ -60,10 +61,10 @@
                   <Text id="_IDGenTextRevNo" text="Revision Number" />
                 </Column>
                 <Column id="_IDGenColumnRevKm" width="8em">
-                  <Text id="_IDGenTextRevKm" text="Revision KM" />
+                  <Text id="_IDGenTextRevKm" text="Km after last revision" />
                 </Column>
                 <Column id="_IDGenColumnKmRevision" width="8em">
-                  <Text id="_IDGenTextKmRevision" text="KM_Revision" />
+                  <Text id="_IDGenTextKmRevision" text="Revision KM" />
                 </Column>
                 <Column id="_IDGenColumnKmMax" width="7em">
                   <Text id="_IDGenTextKmMax" text="KM_MAX" />
@@ -97,7 +98,7 @@
                         <Text id="_IDGenTextKm" text="{matList>km}"/>
                         <Text id="_IDGenTextRevisionNo" text="{matList>RevisionNumber}"/>
                         <Text id="_IDGenTextRevisionKm" text="{matList>RevisionKm}"/>
-                        <Text id="_IDGenTextKmRevision1" text="{matList>KmRevision}"/>
+                        <Text id="_IDGenTextKmRevision1" text="{matList>Revisione}"/>
                         <Text id="_IDGenTextKmMax1" text="{matList>KmMax}"/>
                         <Text id="_IDGenTextKmMin1" text="{matList>KmMin}"/>
                         <core:Icon

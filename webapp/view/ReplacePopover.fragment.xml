@@ -11,9 +11,9 @@
             <f:content>
                 <Label text="{i18n>Material}" required="true" />
                 <Input id="idReplaceMatInput" value="" />
-                <Label text="Source Storage Location" required="true" />
+                <Label text="New Equipment Storage Location" required="true" />
                 <Input id="idReplaceSourceStorageInput" value="" maxLength="4" />
-                <Label text="Destination Storage Location" required="true" />
+                <Label text="Destination Storage Location Of Dismantled Equipment" required="true" />
                 <Input id="idReplaceDestinationStorageInput" value="" maxLength="4" />
             </f:content>
         </f:SimpleForm>
