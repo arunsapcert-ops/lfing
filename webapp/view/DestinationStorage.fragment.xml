@@ -1,0 +1,42 @@
+<!-- <core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <Dialog id="idDestStorageDialog" title="Destination Storage Location">
+        <l:Grid defaultSpan="L12 M12 S12" width="auto">
+            <l:content>
+                <Label text="Destination Storage Location (optional)" />
+                <Input
+                    id="idDestStorageInput"
+                    width="14rem"
+                    placeholder="Enter destination storage location (optional)" />
+            </l:content>
+        </l:Grid>
+        <buttons>
+            <Button text="{i18n>CLOSE}" press="onDismantleDestCancel" type="Reject" />
+            <Button text="{i18n>SAVE}" press="onDismantleDestSave" type="Accept" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition> -->
+
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <Dialog id="idDestStorageDialog" title="Destination Storage Location">
+        <l:Grid id="_IDGenGrid1" defaultSpan="L12 M12 S12" width="auto">
+            <l:content>
+                <Label id="_IDGenLabel9" text="{= ${app>/isLifingManagement} ? 'Destination Storage Location' : 'Destination Storage Location (optional)' }" />
+                <Input
+                    id="idDestStorageInput"
+                    width="14rem"
+                    required="{app>/isLifingManagement}"
+                    placeholder="{= ${app>/isLifingManagement} ? 'Enter destination storage location' : 'Enter destination storage location (optional)' }" />
+            </l:content>
+        </l:Grid>
+        <buttons>
+            <Button id="_IDGenButton6" text="{i18n>CLOSE}" press="onDismantleDestCancel" type="Reject" />
+            <Button id="_IDGenButton9" text="{i18n>SAVE}" press="onDismantleDestSave" type="Accept" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

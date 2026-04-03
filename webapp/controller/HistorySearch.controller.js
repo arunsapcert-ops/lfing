@@ -9,10 +9,19 @@ sap.ui.define([
 
   return Controller.extend("com.piaggio.sap.lifing.lifing.controller.HistorySearch", {
 
+    onUppercaseLiveChange: function (oEvent) {
+      const sVal = oEvent.getParameter("newValue") || oEvent.getParameter("value") || "";
+      const sUpper = sVal.toUpperCase();
+      if (sVal !== sUpper) {
+        oEvent.getSource().setValue(sUpper);
+      }
+    },
+
     // Create a token when user presses Enter in a MultiInput
     onAddToken: function (e) {
       const mi = e.getSource();
-      const text = (e.getParameter("value") || "").trim();
+      // const text = (e.getParameter("value") || "").trim();
+      const text = (e.getParameter("value") || "").trim().toUpperCase();
       if (!text) return;
 
       // avoid duplicate tokens by text (simple guard)

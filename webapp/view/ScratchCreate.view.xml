@@ -17,6 +17,7 @@
                  <Input
 					id="_IDGenComboBox1"
 					maxLength="4"
+                    liveChange="onStorageLocationLiveChange"
 					change="onSelectStorageLocation"
 					placeholder="Storage Location"
                     enabled="{= ${mList>/root}.length === 0}"

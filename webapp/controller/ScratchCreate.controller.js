@@ -26,7 +26,8 @@ sap.ui.define([
                 this.getView().setModel(popOverModel, "popOver");
                 this.getView().setModel(new sap.ui.model.json.JSONModel({
                     isLifingManagement: false,
-                    kmAlert: 500
+                    kmAlert: 500,
+                    showInstallationStorageOptional: false
                 }), "app");
                 this.lifingParameter = "L";
                 this.mGroupData = {};
@@ -250,8 +251,11 @@ sap.ui.define([
             },
 
             handleInstallationSearchPress: function () {
-                var sMaterial = (this.byId("idInstallationMatInput")?.getValue() || "").trim();
-                var sStorageLocation = (this.byId("idInstallationStorageInput")?.getValue() || "").trim();
+                // var sMaterial = (this.byId("idInstallationMatInput")?.getValue() || "").trim();
+                // var sStorageLocation = (this.byId("idInstallationStorageInput")?.getValue() || "").trim();
+
+                var sMaterial = (this.byId("idInstallationMatInput")?.getValue() || "").trim().toUpperCase();
+                var sStorageLocation = (this.byId("idInstallationStorageInput")?.getValue() || "").trim().toUpperCase();
 
                 if (!sMaterial || !sStorageLocation) {
                     MessageBox.error("Material and Storage Location are mandatory.");
@@ -334,9 +338,13 @@ sap.ui.define([
             },
 
             handleReplaceSearchPress: function () {
-                var sMaterial = (this.byId("idReplaceMatInput")?.getValue() || "").trim();
-                var sSourceStorageLocation = (this.byId("idReplaceSourceStorageInput")?.getValue() || "").trim();
-                var sDestinationStorageLocation = (this.byId("idReplaceDestinationStorageInput")?.getValue() || "").trim();
+                // var sMaterial = (this.byId("idReplaceMatInput")?.getValue() || "").trim();
+                // var sSourceStorageLocation = (this.byId("idReplaceSourceStorageInput")?.getValue() || "").trim();
+                // var sDestinationStorageLocation = (this.byId("idReplaceDestinationStorageInput")?.getValue() || "").trim();
+
+                var sMaterial = (this.byId("idReplaceMatInput")?.getValue() || "").trim().toUpperCase();
+                var sSourceStorageLocation = (this.byId("idReplaceSourceStorageInput")?.getValue() || "").trim().toUpperCase();
+                var sDestinationStorageLocation = (this.byId("idReplaceDestinationStorageInput")?.getValue() || "").trim().toUpperCase();
 
                 if (!sMaterial || !sSourceStorageLocation || !sDestinationStorageLocation) {
                     MessageBox.error("Material, Source Storage Location and Destination Storage Location are mandatory.");
@@ -463,7 +471,56 @@ sap.ui.define([
 
                 const oItemData = sItem.getBindingContext("snumberList").getObject();
                 const sParentEq = aRoot[0].Equipment;
+                const sNewEq = (oItemData.Zequnr || "").trim();
+                const sOldEq = (oSelectedMainRow.Equipment || "").trim();
+                if (!sOldEq || !sNewEq) {
+                    MessageBox.error("Old or new equipment number is missing.");
+                    return;
+                }
+
+                const oSonFilter = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter({
+                            path: "IEQUISON",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: sOldEq
+                        }),
+                        new sap.ui.model.Filter({
+                            path: "IEQUISON",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: sNewEq
+                        })
+                    ],
+                    and: false
+                });
                 const sSonEq = oItemData.Zequnr;
+                // const oFilter = new sap.ui.model.Filter({
+                //     filters: [
+                //         new sap.ui.model.Filter({
+                //             path: "IEQUIPPARENT",
+                //             operator: sap.ui.model.FilterOperator.EQ,
+                //             value1: sParentEq
+                //         }),
+                //         new sap.ui.model.Filter({
+                //             path: "IPARAM",
+                //             operator: sap.ui.model.FilterOperator.EQ,
+                //             value1: "R"
+                //         }),
+                //         new sap.ui.model.Filter({
+                //             path: "ILGORT",
+                //             operator: sap.ui.model.FilterOperator.EQ,
+                //             value1: sDestinationStorageLocation
+                //         }),
+                //         new sap.ui.model.Filter({
+                //             path: "IEQUISON",
+                //             operator: sap.ui.model.FilterOperator.EQ,
+                //             value1: sSonEq
+                //         })
+                //     ],
+                //     and: true
+                // });
+
+
                 const oFilter = new sap.ui.model.Filter({
                     filters: [
                         new sap.ui.model.Filter({
@@ -481,11 +538,7 @@ sap.ui.define([
                             operator: sap.ui.model.FilterOperator.EQ,
                             value1: sDestinationStorageLocation
                         }),
-                        new sap.ui.model.Filter({
-                            path: "IEQUISON",
-                            operator: sap.ui.model.FilterOperator.EQ,
-                            value1: sSonEq
-                        })
+                        oSonFilter
                     ],
                     and: true
                 });
@@ -694,6 +747,8 @@ sap.ui.define([
                         success: function (oresponse) {
                             var oMListModel = that.getView().getModel("mList");
                             var aExisting = oMListModel.getData().root || [];
+                            const kmAlert = that._getKmAlertValue();
+                            const bIsLifingManagement = !!that.getView().getModel("app")?.getProperty("/isLifingManagement");
                             var aNew = oresponse.results;
 
                             if (aNew && aNew.length > 0) {
@@ -771,8 +826,18 @@ sap.ui.define([
                                     return Number(s) || 0;
                                 };
 
+                                // let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
+                                // let revisionKmRaw = node.RevisionKm ?? "";
+                                // if (bIsLifingManagement) {
+                                //     [kmAfterLastRevisionRaw, revisionKmRaw] = [revisionKmRaw, kmAfterLastRevisionRaw];
+                                // }
+
+                                // const nKmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
+
+
                                 const kmValue = normalize(
                                     node.RevisionNumber > 0 ? node.RevisionKm : node.Km
+                                    // node.RevisionNumber > 0 ? revisionKmRaw : node.Km
                                 );
 
                                 const kmMin = normalize(node.KmMin || node.min);
@@ -822,7 +887,10 @@ sap.ui.define([
                                     Note: node.Note || "",
                                     KmRevisione: node.KmRevisione || '',
                                     RevisionNumber: node.RevisionNumber || '',
-                                    RevisionKm: node.RevisionKm || '',
+                                    // RevisionKm: node.RevisionKm || '',KmRevisione
+                                    RevisionKm:node.RevisionKm || '',
+                                    Revisione:node.KmRevisione || '',
+                                    // RevisionKm: node.RevisionKm || '',
                                     min: node.KmMin || "",
                                     max: node.KmMax || "",
                                     Km: node.Km,
@@ -846,6 +914,7 @@ sap.ui.define([
                             oMListModel.updateBindings();
 
                             console.log("Merged Tree Data (fourthModel):", aMerged);
+                            console.log("aRemapped Tree Data (fourthModel):", aRemapped);
                         },
                         error: function (oError) {
                             that.getView().setBusy(false);
@@ -854,6 +923,15 @@ sap.ui.define([
                     });
                 }
 
+            },
+
+            onStorageLocationLiveChange: function (oEvent) {
+                const oInput = oEvent.getSource();
+                const s = oInput.getValue() || "";
+                const sUpper = s.toUpperCase();
+                if (s !== sUpper) {
+                    oInput.setValue(sUpper);
+                }
             },
 
             handleUploadPress: function (oEvent) {
@@ -2378,6 +2456,12 @@ sap.ui.define([
                     MessageBox.error("Please enter Material");
                     return; // stop execution
                 }
+
+                matData.Material = String(matData.Material).trim().toUpperCase();
+                if (oMaterialInput) {
+                    oMaterialInput.setValue(matData.Material);
+                }
+
                 matData.children = [];
                 if (matData.level == 1) {
                     this.getView().getModel("mList").getData().root.forEach((mObject, i) => {
@@ -2577,9 +2661,17 @@ sap.ui.define([
                             this.oTable.getContextByIndex(seleItems[i]).getObject().Equipment.trim() == "") {
                             saveEnabled = false;
                         }
-                        if (seleItems.length == 1 && this.oTable.getContextByIndex(seleItems[i]).getObject().children.length) {
-                            dismantleEnabled = true;
+                        // if (seleItems.length == 1 && this.oTable.getContextByIndex(seleItems[i]).getObject().children.length) {
+                        //     dismantleEnabled = true;
+                        // }
+                        // New dismantle flow: select a child row (single selection).
+                        // We compute its father from the tree.
+                        if (seleItems.length === 1) {
+                            var oSel = this.oTable.getContextByIndex(seleItems[i]).getObject();
+                            var oFather = this._findFatherOfEquipment(oSel && oSel.Equipment);
+                            dismantleEnabled = !!(oSel && oSel.Equipment && oFather && oFather.Equipment);
                         }
+                    // }
                     }
                     if (!(seleItems.length > 1)) {
                         saveEnabled = false;
@@ -2596,6 +2688,26 @@ sap.ui.define([
                 if (oReplaceButton && bIsLifingManagement) {
                     oReplaceButton.setEnabled(sLifingSelectKey === "No" && this._isSingleChildSelected());
                 }
+            },
+
+            _findFatherOfEquipment: function (sChildEquipment) {
+                if (!sChildEquipment) return null;
+                var oModel = this.getView().getModel("mList");
+                var aRoot = (oModel && oModel.getData && oModel.getData().root) ? oModel.getData().root : [];
+
+                var walk = function (nodes, parent) {
+                    if (!Array.isArray(nodes)) return null;
+                    for (var i = 0; i < nodes.length; i++) {
+                        var n = nodes[i];
+                        if (!n) continue;
+                        if (n.Equipment === sChildEquipment) return parent || null;
+                        var found = walk(n.children, n);
+                        if (found) return found;
+                    }
+                    return null;
+                };
+
+                return walk(aRoot, null);
             },
 
             onSaveEquipment: function (oEvent) {
@@ -2775,8 +2887,8 @@ sap.ui.define([
                     and: false
                 });
 
-                const sEqStorageLoc = (this.byId("idStorageLocInputEq")?.getValue() || "").trim() || (this.storageLocation || "");
-
+                // const sEqStorageLoc = (this.byId("idStorageLocInputEq")?.getValue() || "").trim() || (this.storageLocation || "");
+const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim() || (this.storageLocation || "").trim()).toUpperCase();
                 // ZLIFING3 filter
                 const oFilter = new sap.ui.model.Filter({
                     filters: [
@@ -2954,6 +3066,7 @@ sap.ui.define([
                             })
                             .catch(err => {
                                 console.error("ZLIFING4 refresh failed:", err);
+                                MessageBox.error((err && err.message) ? err.message : "Subtree refresh failed.");
                                 oView.setBusy(false);
                             });
                         }
@@ -3075,7 +3188,8 @@ sap.ui.define([
                 // if (kmVal < kmMin) traffic = "G";
                 // else if (kmVal >= kmMin && kmVal < kmMax) traffic = "Y";
                 // else traffic = "R";
-
+                const kmAfterLastRevision = toNumber(node.KmRevisione ?? node.KmRevisione);
+                const kmAlert = this._getKmAlertValue();
                 const { traffic, icon, color } = this._computeTraffic({
                     revisionNumber: node.RevisionNumber,
                     max: kmMax,
@@ -3293,7 +3407,7 @@ sap.ui.define([
                     const oFilter = new sap.ui.model.Filter({
                         filters: [
                             new sap.ui.model.Filter({ path: "ISernr", operator: "EQ", value1: serial }),
-                            new sap.ui.model.Filter({ path: "ILgort", operator: "EQ", value1: 'ARTT' }),
+                            new sap.ui.model.Filter({ path: "ILgort", operator: "EQ", value1:this.storageLocation }),
                             new sap.ui.model.Filter({ path: "IParameter", operator: "EQ", value1: "B" }),
                             new sap.ui.model.Filter({ path: "IMatnr", operator: "EQ", value1: material })
                         ],
@@ -3302,7 +3416,30 @@ sap.ui.define([
 
                     oSrv.read("/ZLIFING4Set", {
                         filters: [oFilter],
-                        success: resp => resolve(this._mapLifingTree(resp.results)),
+                        // success: resp => resolve(this._mapLifingTree(resp.results)),
+                        success: (resp) => {
+                            const aResults = (resp && resp.results) ? resp.results : [];
+                            const oKo = aResults.find(r =>
+                                (r && (r.ReturnCode === "KO" || r.ZRETURN === "KO" || r.Zreturn === "KO"))
+                            );
+                            if (oKo) {
+                                const sMsg = oKo.ReturnMessage || oKo.ZRETURN_MSG || oKo.ZreturnMsg || "Subtree refresh failed.";
+                            //    if (sMsg && /not authorized/i.test(sMsg) && /storage location/i.test(sMsg)) {
+                            //         resolve(null);
+                            //         return;
+                            //     }
+                                reject(new Error(sMsg));
+                                return;
+                            }
+
+                            // Some backends return a single message row; if we cannot map a tree, treat it as an error.
+                            const oTree = this._mapLifingTree(aResults);
+                            if (!oTree || !oTree.Equipment) {
+                                reject(new Error("Material and Serial Number combination not found in the storage location."));
+                                return;
+                            }
+                            resolve(oTree);
+                        },
                         error: reject
                     });
                 });
@@ -3329,29 +3466,72 @@ sap.ui.define([
             // },
 
 
+            // onPressDismantle: function (oEvent) {
+            //     var peqIndex = this.oTable.getSelectedIndices();
+            //     this.parentEquipment = this.oTable.getContextByIndex(peqIndex[0]).getObject();
+            //     var childModel = new sap.ui.model.json.JSONModel(this.parentEquipment.children);
+            //     this.getView().setModel(childModel, "ChildList");
+            //     var oStorageInput = this.getView().byId("idDismantleStorageInput");
+            //     if (oStorageInput) {
+            //         oStorageInput.setValue("");
+            //         oStorageInput.setValueState("None");
+            //     }
+            //     var oView = this.getView();
+            //     if (!this._oChildEquipDialog) {
+            //         Fragment.load({
+            //             id: oView.getId(),  // Ensure unique ID
+            //             name: "com.piaggio.sap.lifing.lifing.view.ChildMaterial", // Fragment path
+            //             controller: this // Bind the controller
+            //         }).then(function (oDialog) {
+            //             oView.addDependent(oDialog); // Add dialog to view
+            //             this._oChildEquipDialog = oDialog; // Store for reuse
+            //             this._oChildEquipDialog.open(); // Open dialog
+            //         }.bind(this));
+            //     } else {
+            //         this._oChildEquipDialog.open();
+            //     }
+            // },
+
             onPressDismantle: function (oEvent) {
-                var peqIndex = this.oTable.getSelectedIndices();
-                this.parentEquipment = this.oTable.getContextByIndex(peqIndex[0]).getObject();
-                var childModel = new sap.ui.model.json.JSONModel(this.parentEquipment.children);
-                this.getView().setModel(childModel, "ChildList");
-                var oStorageInput = this.getView().byId("idDismantleStorageInput");
-                if (oStorageInput) {
-                    oStorageInput.setValue("");
-                    oStorageInput.setValueState("None");
+                var aSel = this.oTable.getSelectedIndices();
+                if (!aSel || !aSel.length) {
+                    MessageBox.error("Please select a child row to dismantle.");
+                    return;
                 }
+
+                this.selectedChildEquipment = this.oTable.getContextByIndex(aSel[0]).getObject();
+                this.parentEquipment = this._findFatherOfEquipment(this.selectedChildEquipment && this.selectedChildEquipment.Equipment);
+
+                if (!this.selectedChildEquipment || !this.selectedChildEquipment.Equipment || !this.parentEquipment || !this.parentEquipment.Equipment) {
+                    MessageBox.error("Selected row has no father equipment. Please select a child under a parent.");
+                    return;
+                }
+
+                // Only popup: optional destination storage location
+                this._dismantleDestStorage = "";
                 var oView = this.getView();
-                if (!this._oChildEquipDialog) {
+                if (!this._oDismantleDestDialog) {
                     Fragment.load({
-                        id: oView.getId(),  // Ensure unique ID
-                        name: "com.piaggio.sap.lifing.lifing.view.ChildMaterial", // Fragment path
-                        controller: this // Bind the controller
+                        id: oView.getId(),
+                        name: "com.piaggio.sap.lifing.lifing.view.DestinationStorage",
+                        controller: this
                     }).then(function (oDialog) {
-                        oView.addDependent(oDialog); // Add dialog to view
-                        this._oChildEquipDialog = oDialog; // Store for reuse
-                        this._oChildEquipDialog.open(); // Open dialog
+                        oView.addDependent(oDialog);
+                        this._oDismantleDestDialog = oDialog;
+                        var oInput = this.getView().byId("idDestStorageInput");
+                        if (oInput) {
+                            oInput.setValue("");
+                            oInput.setValueState("None");
+                        }
+                        this._oDismantleDestDialog.open();
                     }.bind(this));
                 } else {
-                    this._oChildEquipDialog.open();
+                    var oInput = this.getView().byId("idDestStorageInput");
+                    if (oInput) {
+                        oInput.setValue("");
+                        oInput.setValueState("None");
+                    }
+                    this._oDismantleDestDialog.open();
                 }
             },
 
@@ -3561,6 +3741,146 @@ sap.ui.define([
                     }
                 });
             },
+
+            onDismantleDestCancel: function () {
+                if (this._oDismantleDestDialog) {
+                    this._oDismantleDestDialog.close();
+                }
+            },
+
+            onDismantleDestSave: function () {
+                var oInput = this.getView().byId("idDestStorageInput");
+                // this._dismantleDestStorage = oInput ? (oInput.getValue() || "").trim() : "";
+                var sDest = oInput ? (oInput.getValue() || "").trim().toUpperCase() : "";
+                this._dismantleDestStorage = sDest;
+                if (oInput && (oInput.getValue() || "") !== sDest) {
+                    oInput.setValue(sDest);
+                }
+                var bIsLifingManagement = false;
+                var oAppModel = this.getView().getModel("app");
+                if (oAppModel) {
+                    bIsLifingManagement = !!oAppModel.getProperty("/isLifingManagement");
+                }
+
+                if (oInput) {
+                    oInput.setValueState("None");
+                    oInput.setValueStateText("");
+                }
+
+                if (bIsLifingManagement && !this._dismantleDestStorage) {
+                    if (oInput) {
+                        oInput.setValueState("Error");
+                        oInput.setValueStateText("Destination storage location is required.");
+                        oInput.focus();
+                    }
+                    return;
+                }
+                if (this._oDismantleDestDialog) {
+                    this._oDismantleDestDialog.close();
+                }
+                this._executeDismantleSelectedChild();
+            },
+
+            _executeDismantleSelectedChild: function () {
+                var sStorageLocation = (this._dismantleDestStorage || "").trim(); // optional
+                // var sDismantleParam = "T";
+                var bIsLifingManagement = !!this.getView().getModel("app")?.getProperty("/isLifingManagement");
+                var sDismantleParam = bIsLifingManagement ? "T" : "D";
+
+                var oChild = this.selectedChildEquipment;
+                var oFather = this.parentEquipment;
+
+                if (!oChild || !oChild.Equipment || !oFather || !oFather.Equipment) {
+                    MessageBox.error("Missing child/father selection for dismantle.");
+                    return;
+                }
+
+                var sonFilter = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter({
+                            path: "IEQUISON",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: oChild.Equipment
+                        })
+                    ],
+                    and: false
+                });
+
+                var oFilter = new sap.ui.model.Filter({
+                    filters: [
+                        new sap.ui.model.Filter({
+                            path: "IEQUIPPARENT",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: oFather.Equipment
+                        }),
+                        new sap.ui.model.Filter({
+                            path: "IPARAM",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: sDismantleParam
+                        }),
+                        new sap.ui.model.Filter({
+                            path: "ILGORT",
+                            operator: sap.ui.model.FilterOperator.EQ,
+                            value1: sStorageLocation
+                        }),
+                        sonFilter
+                    ],
+                    and: true
+                });
+
+                var oDataModel = this.getOwnerComponent().getModel("thirdModel");
+                var odataCall = "/ZLIFING3SET";
+                var that = this;
+
+                oDataModel.read(odataCall, {
+                    filters: [oFilter],
+                    success: function (oresponse) {
+                        var oModel = that.getView().getModel("mList");
+                        var rootData = oModel.getData();
+                        var aResults = (oresponse && oresponse.results) ? oresponse.results : [];
+
+                        aResults.forEach(function (res) {
+                            if (res.ZRETURN === "OK") {
+                                var removedIndex = that.parentEquipment.children.findIndex(function (eqObj) {
+                                    return eqObj && eqObj.Equipment === res.EEQUIPSON;
+                                });
+                                if (removedIndex === -1) return;
+
+                                var child = that.parentEquipment.children[removedIndex];
+                                var childCopy = JSON.parse(JSON.stringify(child));
+                                childCopy.fb = "DISM";
+                                childCopy.fbMessage = "Dismantled";
+
+                                that.parentEquipment.children.splice(removedIndex, 1);
+
+                                var existingIndex = rootData.root.findIndex(function (r) {
+                                    return r && r.Equipment === res.EEQUIPSON;
+                                });
+
+                                if (existingIndex !== -1) {
+                                    oModel.setProperty("/root/" + existingIndex + "/fb", "DISM");
+                                    oModel.setProperty("/root/" + existingIndex + "/fbMessage", "Dismantled");
+                                } else {
+                                    rootData.root.push(childCopy);
+                                    var rootIndex = rootData.root.length - 1;
+                                    oModel.setProperty("/root/" + rootIndex + "/fb", "DISM");
+                                    oModel.setProperty("/root/" + rootIndex + "/fbMessage", "Dismantled");
+                                }
+
+                                var fgKey = childCopy.fg;
+                                if (!that.mGroupData[fgKey]) that.mGroupData[fgKey] = [];
+                                if (!that.mGroupData[fgKey].some(function (item) { return item.Equipment === childCopy.Equipment; })) {
+                                    that.mGroupData[fgKey].push(childCopy);
+                                }
+                            } else if (res.ZRETURN === "KO") {
+                                MessageBox.show("Dismantle failed");
+                            }
+                        });
+
+                        oModel.updateBindings();
+                    }
+                });
+            },
             
             oncloseeqDialog: function (oEvent) {
                 // this._oChildEquipDialog.close();
@@ -3576,8 +3896,15 @@ sap.ui.define([
                 }
             },
 
-            openMatListDialog: function (oEvent) {
+            openMatListDialog: function (oEvent,sSource) {
                 var oView = this.getView();
+                // if (sSource) {
+                //     this._matListSource = sSource;
+                // }
+                // this.getView().getModel("app").setProperty(
+                //     "/showInstallationStorageOptional",
+                //     this._matListSource === "installation"
+                // );
                 if (!this._oMatListDialog) {
                     Fragment.load({
                         id: oView.getId(),  // Ensure unique ID
@@ -3586,18 +3913,29 @@ sap.ui.define([
                     }).then(function (oDialog) {
                         oView.addDependent(oDialog); // Add dialog to view
                         this._oMatListDialog = oDialog; // Store for reuse
+                        if (this._matListSource === "installation") {
+                            const oStorageInput = this.byId("idInstallationStorageOptional");
+                            if (oStorageInput) oStorageInput.setValue(this.storageLocation || "");
+                        }
                         this._oMatListDialog.open(); // Open dialog
                     }.bind(this));
                 } else {
+                    if (this._matListSource === "installation") {
+                        const oStorageInput = this.byId("idInstallationStorageOptional");
+                        if (oStorageInput) oStorageInput.setValue(this.storageLocation || "");
+                    }
                     this._oMatListDialog.open();
                 }
             },
 
             handleSearchPress: function (oEvent) {
-                var material = this.getView().byId("idmatinput").getValue();
+                // var material = this.getView().byId("idmatinput").getValue();
+                var material = (this.getView().byId("idmatinput").getValue() || "").trim().toUpperCase();
                 var sno = this.getView().byId("idsnoinput").getValue();
-                var storageLocation = this.getView().byId("idStorageLocInput") ? this.getView().byId("idStorageLocInput").getValue() : "";
-                var storageLocationStruct = this.getView().byId("idStorageLocInputStruct") ? this.getView().byId("idStorageLocInputStruct").getValue() : "";
+                // var storageLocation = this.getView().byId("idStorageLocInput") ? this.getView().byId("idStorageLocInput").getValue() : "";
+                // var storageLocationStruct = this.getView().byId("idStorageLocInputStruct") ? this.getView().byId("idStorageLocInputStruct").getValue() : "";
+                var storageLocation = this.getView().byId("idStorageLocInput") ? (this.getView().byId("idStorageLocInput").getValue() || "").trim().toUpperCase() : "";
+                var storageLocationStruct = this.getView().byId("idStorageLocInputStruct") ? (this.getView().byId("idStorageLocInputStruct").getValue() || "").trim().toUpperCase() : "";
                 
                 this.getView().byId("idmatinput").setValue("");
                 this.getView().byId("idsnoinput").setValue("");
@@ -4093,6 +4431,10 @@ sap.ui.define([
             onSelectSerialNumberPress: function (oEvent) {
 
                  if (this._matListSource === "installation") {
+                    // const oStorageInput = this.byId("idInstallationStorageOptional");
+                    // const sOptionalStorage = (oStorageInput?.getValue() || "").trim();
+                    // // Copy even if empty so ILGORT filter can be omitted when user clears it.
+                    // if (oStorageInput) this.storageLocation = sOptionalStorage;
                     this._handleInstallationSelection();
                     return;
                 }

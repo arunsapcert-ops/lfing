@@ -24,6 +24,8 @@ sap.ui.define([
             },
 
             onRouteMatched: function (oEvent) {
+
+                this._lastSearchedMaterial = "";
                 this.getView().getModel("matList").setData({
                     "root": []
                 });
@@ -38,6 +40,7 @@ sap.ui.define([
 
             onNavButtonPress: function () {
                 // this.oTable.clearSelection();
+                this._lastSearchedMaterial = "";
                 // this.getView().getModel("matList").setData();
                 this.getView().getModel("matList").setData({
                     "root": []
@@ -47,6 +50,7 @@ sap.ui.define([
 
             onSelectStorageLocation: function (oEvent) {
                 this.storageLocation = oEvent.getSource().getSelectedKey();
+                this._lastSearchedMaterial = "";
                 // this.storageLocation = oEvent.getSource().getSelectedKey();
                 this.getView().byId("_IDGenComboBox4").setEnabled(this.storageLocation ? false : true);
                 // this.getView().byId("idAddButton1").setEnabled(true);
@@ -134,6 +138,11 @@ sap.ui.define([
             },
 
             onOpenMovement: function (sParameter, sAction) {
+
+                var bFirstArgIsEvent = !!(sParameter && typeof sParameter === "object" && typeof sParameter.getSource === "function");
+                var sNormalizedParameter = bFirstArgIsEvent ? "" : sParameter;
+                var sNormalizedAction = (typeof sAction === "string") ? sAction : "";
+
                 this._sMovementAction = sAction || "movement";
                 this._sMovementParameter = sParameter || "M";
                 this.getView().getModel("uiState").setProperty("/movementStorageRequired", this._sMovementAction !== "remove");
@@ -342,6 +351,10 @@ sap.ui.define([
                 var oInput = sap.ui.core.Fragment.byId(oView.getId(), "idMovementStorageLoc");
                 var sStorLoc = (oInput && oInput.getValue ? oInput.getValue() : "") || "";
                 sStorLoc = sStorLoc.trim();
+                sStorLoc = sStorLoc.trim().toUpperCase();
+                if (oInput && sStorLoc) {
+                    oInput.setValue(sStorLoc);
+                }
                 var bIsRemoveAction = this._sMovementAction === "remove";
 
                 if (!bIsRemoveAction && !sStorLoc) {
@@ -362,7 +375,15 @@ sap.ui.define([
                 }
 
                 var oLIFING11Model = this.getOwnerComponent().getModel("eleventhModel");
-                var sParameter = this._sMovementParameter || "M";
+                // var sParameter = this._sMovementParameter || "M";
+                var sParameter = this._sMovementParameter;
+                if (typeof sParameter !== "string") {
+                    sParameter = "";
+                }
+                sParameter = sParameter.trim();
+                if (!sParameter) {
+                    sParameter = this._sMovementAction === "remove" ? "R" : "M";
+                }
                 var sActionLabel = this._sMovementAction === "remove" ? "Remove" : "Movement";
                 var that = this;
                 oView.setBusy(true);
@@ -493,6 +514,9 @@ sap.ui.define([
                     } else if (aSuccesses.length > 0) {
                         // sap.m.MessageToast.show("Movement completed for " + aSuccesses.length + " row(s)");
                         sap.m.MessageToast.show(sActionLabel + " completed for " + aSuccesses.length + " row(s)");
+                    }
+                    if (that._sMovementAction === "remove" && aSuccesses.length > 0) {
+                        that._refreshMatListFromSearch();
                     }
                 }).catch(function (e) {
                     oView.setBusy(false);
@@ -851,6 +875,9 @@ sap.ui.define([
                     } else if (aSuccesses.length > 0) {
                         sap.m.MessageToast.show("Consumption completed for " + aSuccesses.length + " row(s)");
                     }
+                    if (aSuccesses.length > 0) {
+                        that._refreshMatListFromSearch();
+                    }
                 }).catch(function (e) {
                     oView.setBusy(false);
                     MessageBox.error("Consumption failed.");
@@ -980,8 +1007,18 @@ sap.ui.define([
             //     });
             // },
 
+            onMatSearchLiveChange: function (oEvent) {
+                var sVal = oEvent.getParameter("newValue") || "";
+                var sUpper = sVal.toUpperCase();
+                if (sVal !== sUpper) {
+                    oEvent.getSource().setValue(sUpper);
+                }
+            },
+
             onSearch: function (oEvent) {
-                var matSelected = oEvent.getSource().getValue();
+                // var matSelected = oEvent.getSource().getValue();
+                var matSelected = String(oEvent.getSource().getValue() || "").trim().toUpperCase();
+                oEvent.getSource().setValue(matSelected);
                 var that = this;
                 var oDataModel = this.getOwnerComponent().getModel("fifthModel");
                 var oMatListModel = this.getView().getModel("matList");
@@ -1106,6 +1143,23 @@ sap.ui.define([
                             });
                         });
 
+                        if (bIsYellowStatus && matList.length > 1) {
+                            var oRow0 = matList[0];
+                            var oRow1 = matList[1];
+                            if (oRow0 && oRow1) {
+                                if (!oRow0.RevisionKm) {
+                                    // oRow0.RevisionKm = oRow1.RevisionKm;
+                                    oRow0.Revisione = oRow1.Revisione;
+                                }
+                                if (!oRow0.KmMax) {
+                                    oRow0.KmMax = oRow1.KmMax;
+                                }
+                                if (!oRow0.KmMin) {
+                                    oRow0.KmMin = oRow1.KmMin;
+                                }
+                            }
+                        }
+                        var iYellowHeadRows = 1;
                         if (bIsYellowStatus) {
                         // Duplicate the first table row Zquan times (one row per serial / unit)
                         var vZquan = aAllResults[0] && aAllResults[0].Zquan;
@@ -1116,15 +1170,25 @@ sap.ui.define([
                         iZquan = Math.floor(iZquan);
                         if (matList.length > 0 && iZquan > 1) {
                             var oFirstRow = matList[0];
+                            var oSecondRow = matList.length > 1 ? matList[1] : null;
                             var aExpanded = [oFirstRow];
                             for (var iDup = 1; iDup < iZquan; iDup++) {
                                 var oClone = JSON.parse(JSON.stringify(oFirstRow));
                                 oClone.snumber = "";
+                                if (oSecondRow) {
+                                            // oClone.RevisionKm = oSecondRow.RevisionKm;
+                                            oClone.Revisione = oSecondRow.Revisione;
+                                            oClone.KmMax = oSecondRow.KmMax;
+                                            oClone.KmMin = oSecondRow.KmMin;
+                                        }
                                 aExpanded.push(oClone);
                             }
+                            iYellowHeadRows = iZquan;
                             matList = aExpanded.concat(matList.slice(1));
                         }
                     }
+
+                    matList = that._sortMatListByEquipment(matList, sFirstRowReturnCode, iYellowHeadRows);
 
                         if (bHasKO) {
                             MessageBox.show(sKoMessage);
@@ -1133,6 +1197,7 @@ sap.ui.define([
                         var mergedData = [...that.getView().getModel("matList").getData().root, ...matList];
                         // that._setFirstRowStatusVisibility(mergedData);
                         that._applyStatusVisibility(mergedData, sFirstRowReturnCode);
+                        that._lastSearchedMaterial = String(matSelected || "").trim();
                         that.getView().byId("_IDMatSearchField").setValue();
                         // that.getView().getModel("matList").getData().root = mergedData;
                         that.getView().getModel("matList").setData({ root: matList });
@@ -1615,9 +1680,17 @@ sap.ui.define([
 
                         if (aError.length === 0 && aSuccess.length > 0) {
                             // All OK
-                            sap.m.MessageToast.show(
-                                aSuccess[0] || "Equipment created correctly"
-                            );
+                            // sap.m.MessageToast.show(
+                            //     aSuccess[0] || "Equipment created correctly"
+                            // );
+                            MessageBox.success(aSuccess[0] || "Equipment created correctly", {
+                                actions: [MessageBox.Action.OK],
+                                onClose: function (oAction) {
+                                    if (oAction === MessageBox.Action.OK) {
+                                        that._refreshMatListFromSearch();
+                                    }
+                                }
+                            });
                         } else if (aError.length > 0) {
                             // Some or all failed → show combined error
                             var sMsg = "One or more creations failed:\n" + aError.join("\n");
@@ -1865,10 +1938,18 @@ sap.ui.define([
 
                         if (aError.length === 0 && aSuccess.length > 0) {
                             // All OK
-                            sap.m.MessageToast.show(
-                                // "ALL DONE: " + aSuccess[0]
-                                aSuccess[0] || "Equipment created correctly"
-                            );
+                            // sap.m.MessageToast.show(
+                            //     // "ALL DONE: " + aSuccess[0]
+                            //     aSuccess[0] || "Equipment created correctly"
+                            // );
+                            MessageBox.success(aSuccess[0] || "Equipment created correctly", {
+                                actions: [MessageBox.Action.OK],
+                                onClose: function (oAction) {
+                                    if (oAction === MessageBox.Action.OK) {
+                                        that._refreshMatListFromSearch();
+                                    }
+                                }
+                            });
                         } else if (aError.length > 0) {
                             // Some or all failed → show combined error
                             var sMsg = "One or more creations failed:\n" + aError.join("\n");
@@ -1884,6 +1965,62 @@ sap.ui.define([
                         that.getView().setBusy(false);
                         sap.m.MessageBox.error("Error while creating serial numbers.");
                     });
+            },
+
+            _sortMatListByEquipment: function (aRows, sStatusCode, iYellowHeadRows) {
+                if (!Array.isArray(aRows) || aRows.length < 2) {
+                    return aRows;
+                }
+                var sCode = String(sStatusCode || "").toUpperCase().trim();
+                var iHead = 0;
+                if (sCode === "Y") {
+                    iHead = typeof iYellowHeadRows === "number" && iYellowHeadRows >= 1 ? Math.floor(iYellowHeadRows) : 1;
+                    if (iHead >= aRows.length) {
+                        return aRows;
+                    }
+                }
+                var aHead = aRows.slice(0, iHead);
+                var aTail = aRows.slice(iHead);
+                var iPad = 30;
+                aTail.sort(function (a, b) {
+                    var ea = String(a && a.Equipment ? a.Equipment : "").trim();
+                    var eb = String(b && b.Equipment ? b.Equipment : "").trim();
+                    if (!ea && !eb) {
+                        return 0;
+                    }
+                    if (!ea) {
+                        return 1;
+                    }
+                    if (!eb) {
+                        return -1;
+                    }
+                    return ea.padStart(iPad, "0").localeCompare(eb.padStart(iPad, "0"));
+                });
+                return aHead.concat(aTail);
+            },
+
+            _refreshMatListFromSearch: function () {
+                if (!this.storageLocation) {
+                    return;
+                }
+                var oSearch = this.getView().byId("_IDMatSearchField");
+                var sMat = oSearch ? String(oSearch.getValue() || "").trim() : "";
+                if (!sMat) {
+                    sMat = String(this._lastSearchedMaterial || "").trim();
+                }
+                if (!sMat) {
+                    return;
+                }
+                var sMatForRead = sMat;
+                this.onSearch({
+                    getSource: function () {
+                        return {
+                            getValue: function () {
+                                return sMatForRead;
+                            }
+                        };
+                    }
+                });
             },
 
             _updateTrafficLight: function(sReturnCode) {

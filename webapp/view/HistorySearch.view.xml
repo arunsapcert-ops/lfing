@@ -58,7 +58,8 @@
         <MultiInput id="miMaterial"
                     placeholder="Type &amp; press Enter"
                     showValueHelp="false"
-                    submit="onAddToken"/>
+                    submit="onAddToken"
+                    liveChange="onUppercaseLiveChange"/>
 
         <Label text="Equipment"/>
         <MultiInput id="miEquipment"
@@ -73,7 +74,8 @@
                     submit="onAddToken"/>
 
         <Label text="Storage Location"/>
-        <Input id="inpStorageLoc" placeholder="e.g. 0001"/>
+        <!-- <Input id="inpStorageLoc" placeholder="e.g. 0001"/> -->
+        <Input id="inpStorageLoc" placeholder="e.g. 0001" liveChange="onUppercaseLiveChange"/>
 
         <Toolbar design="Transparent" class="sapUiSmallMarginTop">
           <ToolbarSpacer/>

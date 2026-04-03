@@ -12,7 +12,8 @@
 				 </ComboBox>
          <HBox id="idMatBox" width="20%" alignItems="Center" justifyContent="Center">
     				<Label id="_IDMatLabel3" text="{i18n>Material:}" class="sapUiSmallMarginEnd" />
-				    <SearchField id="_IDMatSearchField" search=".onSearch" enabled="false" />
+				    <!-- <SearchField id="_IDMatSearchField" search=".onSearch" enabled="false" /> -->
+            <SearchField id="_IDMatSearchField" search=".onSearch" liveChange=".onMatSearchLiveChange" enabled="false" />
 		    	</HBox>
         <core:Icon 
                     id="idTrafficLightIcon"                    
