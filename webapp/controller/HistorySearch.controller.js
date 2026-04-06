@@ -21,8 +21,12 @@ sap.ui.define([
     onAddToken: function (e) {
       const mi = e.getSource();
       // const text = (e.getParameter("value") || "").trim();
-      const text = (e.getParameter("value") || "").trim().toUpperCase();
-      if (!text) return;
+      // const text = (e.getParameter("value") || "").trim().toUpperCase();
+      // if (!text) return;
+      const raw = (e.getParameter("value") || "").trim();
+      if (!raw) return;
+      // Serial numbers keep user casing; material/equipment stay uppercase for SAP keys
+      const text = mi === this.byId("miSerial") ? raw : raw.toUpperCase();
 
       // avoid duplicate tokens by text (simple guard)
       const exists = mi.getTokens().some(t => (t.getKey?.() || t.getText()) === text);

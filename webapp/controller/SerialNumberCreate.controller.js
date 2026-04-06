@@ -1017,8 +1017,13 @@ sap.ui.define([
 
             onSearch: function (oEvent) {
                 // var matSelected = oEvent.getSource().getValue();
-                var matSelected = String(oEvent.getSource().getValue() || "").trim().toUpperCase();
-                oEvent.getSource().setValue(matSelected);
+                // var matSelected = String(oEvent.getSource().getValue() || "").trim().toUpperCase();
+               var oSrc = oEvent.getSource();
+                var matSelected = String(oSrc.getValue() || "").trim().toUpperCase();
+                if (typeof oSrc.setValue === "function") {
+                    oSrc.setValue(matSelected);
+                }
+                // oEvent.getSource().setValue(matSelected);
                 var that = this;
                 var oDataModel = this.getOwnerComponent().getModel("fifthModel");
                 var oMatListModel = this.getView().getModel("matList");

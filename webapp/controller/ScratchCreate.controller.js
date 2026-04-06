@@ -173,7 +173,12 @@ sap.ui.define([
                 this.getView().byId("_IDGenButtonsno").setEnabled(true);
                 this.getView().byId("_IDGenButtonadds").setEnabled(true); */
 
-                const sValue = (oEvent.getSource().getValue() || "").trim();
+                // const sValue = (oEvent.getSource().getValue() || "").trim();
+                const oInput = oEvent.getSource();
+                const sValue = (oInput.getValue() || "").trim().toUpperCase();
+                if (oInput.getValue() !== sValue) {
+                    oInput.setValue(sValue);
+                }
                 this.storageLocation = sValue;
 
                 // this.getView().byId("idAddButton").setEnabled(!!this.storageLocation);
@@ -616,6 +621,12 @@ sap.ui.define([
             },
 
             onSearch: function (oEvent) {
+
+                var oStorageInput = this.getView().byId("_IDGenComboBox1");
+                if (oStorageInput) {
+                    this.storageLocation = (oStorageInput.getValue() || "").trim().toUpperCase();
+                }
+
                 // var matSelected = oEvent.getSource().getValue();
                 // oEvent.getSource().setValue("");
 

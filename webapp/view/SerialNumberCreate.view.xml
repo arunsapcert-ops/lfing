@@ -34,7 +34,7 @@
         <!-- <Table id="idserialNoCreateTable" inset="false" width="115em" fixedLayout="false" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
         <!-- <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
             <!-- <VBox width="100%" class="serialNoTableScroll"> -->
-        <Table id="idserialNoCreateTable" inset="false" width="100%" fixedLayout="true" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect" class="serialNoWideTable">
+        <Table id="idserialNoCreateTable" inset="false" width="100%" fixedLayout="false" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect" class="serialNoWideTable">
             
             <columns>
                 <Column id="_IDGenColumne" width="8em" visible="true">
