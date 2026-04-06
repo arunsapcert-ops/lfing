@@ -1,123 +1,114 @@
 <mvc:View controllerName="com.piaggio.sap.lifing.lifing.controller.SerialNumberCreate"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m" xmlns:core="sap.ui.core">
+    xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:t="sap.ui.table">
      <Page id="pagesn" title="{i18n>Serial Number Creation}" titleAlignment="Center" showNavButton="true" navButtonPress="onNavButtonPress">
       <customHeader>
-			<Toolbar id="_IDGenToolbar1">
-                 <Button id="_IDGenButton3" icon="sap-icon://nav-back" press="onNavButtonPress"/>
-				 <ComboBox id="_IDGenComboBox4" selectionChange="onSelectStorageLocation" >
-					<core:Item id="_IDGenItem4" key="ARTS" text="Team Satellite" />
-					<core:Item id="_IDGenItem5" key="ARTT" text="Test Team Apr." />
-					<core:Item id="_IDGenItem6" key="ARGP" text="Team Ufficiale" />
-				 </ComboBox>
-         <HBox id="idMatBox" width="20%" alignItems="Center" justifyContent="Center">
-    				<Label id="_IDMatLabel3" text="{i18n>Material:}" class="sapUiSmallMarginEnd" />
-				    <!-- <SearchField id="_IDMatSearchField" search=".onSearch" enabled="false" /> -->
-            <SearchField id="_IDMatSearchField" search=".onSearch" liveChange=".onMatSearchLiveChange" enabled="false" />
-		    	</HBox>
-        <core:Icon 
-                    id="idTrafficLightIcon"                    
-                    src="sap-icon://circle-task-2"
-                    color="Positive"
-                    visible="false"
-                    class="sapUiSmallMarginBegin"/>
-                 <ToolbarSpacer id="_IDGenToolbarSpacersno"/>
-                 <Button id="idCreationButton" press="OnCreation" text="Creation" enabled="false"></Button>
-                 <Button id="idRemoveButton" press="onOpenRemove" text="Remove" enabled="false"></Button>
-                 <Button id="idMovementButton" press="onOpenMovement" text="Movement" enabled="false"></Button>
-                 <Button id="idConsumptionButton" press="onOpenConsumption" text="Consumption" enabled="false"></Button>
-                 <!-- <Button id="idAddButton1" icon="sap-icon://add" type="Transparent" press="OnAddSnoMaterial" enabled="false"></Button> -->
-			</Toolbar>
-	  </customHeader>
+        <Toolbar id="_IDGenToolbar1">
+            <Button id="_IDGenButton3" icon="sap-icon://nav-back" press="onNavButtonPress"/>
+            <ComboBox id="_IDGenComboBox4" selectionChange="onSelectStorageLocation">
+                <core:Item id="_IDGenItem4" key="ARTS" text="Team Satellite" />
+                <core:Item id="_IDGenItem5" key="ARTT" text="Test Team Apr." />
+                <core:Item id="_IDGenItem6" key="ARGP" text="Team Ufficiale" />
+            </ComboBox>
+            <HBox id="idMatBox" width="20%" alignItems="Center" justifyContent="Center">
+                <Label id="_IDMatLabel3" text="{i18n>Material:}" class="sapUiSmallMarginEnd" />
+                <SearchField id="_IDMatSearchField" search=".onSearch" liveChange=".onMatSearchLiveChange" enabled="false" />
+            </HBox>
+            <core:Icon id="idTrafficLightIcon"
+                src="sap-icon://circle-task-2"
+                color="Positive"
+                visible="false"
+                class="sapUiSmallMarginBegin"/>
+            <ToolbarSpacer id="_IDGenToolbarSpacersno"/>
+            <Button id="idCreationButton" press="OnCreation" text="Creation" enabled="false"></Button>
+            <Button id="idRemoveButton" press="onOpenRemove" text="Remove" enabled="false"></Button>
+            <Button id="idMovementButton" press="onOpenMovement" text="Movement" enabled="false"></Button>
+            <Button id="idConsumptionButton" press="onOpenConsumption" text="Consumption" enabled="false"></Button>
+        </Toolbar>
+      </customHeader>
       <content>
-      <ScrollContainer width="100%" height="100%" horizontal="true" vertical="true" focusable="true" class="serialNoTableScroll">
-        <!-- <Table id="idserialNoCreateTable" inset="false" width="115em" fixedLayout="false" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
-        <!-- <Table id="idserialNoCreateTable" inset="false" width="75%" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect"> -->
-            <!-- <VBox width="100%" class="serialNoTableScroll"> -->
-        <Table id="idserialNoCreateTable" inset="false" width="100%" fixedLayout="false" items="{matList>/root}" growing="true" growingThreshold="100" growingScrollToLoad="true" selectionChange="onSelectionChange" mode="MultiSelect" class="serialNoWideTable">
-            
-            <columns>
-                <Column id="_IDGenColumne" width="8em" visible="true">
-                  <Text id="_IDGenTexte" text="{i18n>Equipment}" />
-                </Column>
-                <Column id="_IDGenColumnm" width="8em">
-                  <Text id="_IDGenTextma" text="{i18n>Material}" />
-                </Column>
-                <Column id="_IDGenColumnmdesc" width="12em">
-                  <Text id="_IDGenTextmdesc" text="{i18n>Description}" />
-                </Column>
-                <Column id="_IDGenColumnfg" width="10em">
-                  <Text id="_IDGenTextfg" text="Functional Group" />
-                </Column>
-                <Column id="_IDGenColumnPos" width="8em">
-                  <Text id="_IDGenTextpos" text="{i18n>Position}" />
-                </Column>
-                <Column id="_IDGenColumnNote" width="8em">
-                  <Text id="_IDGenTextnote" text="{i18n>Note}" />
-                </Column>
-                <Column id="_IDGenColumnkm" width="6em">
-                  <Text id="_IDGenTextkm" text="KM" />
-                </Column>
-                <Column id="_IDGenColumnRevNo" width="9em">
-                  <Text id="_IDGenTextRevNo" text="Revision Number" />
-                </Column>
-                <Column id="_IDGenColumnRevKm" width="8em">
-                  <Text id="_IDGenTextRevKm" text="Km after last revision" />
-                </Column>
-                <Column id="_IDGenColumnKmRevision" width="8em">
-                  <Text id="_IDGenTextKmRevision" text="Revision KM" />
-                </Column>
-                <Column id="_IDGenColumnKmMax" width="7em">
-                  <Text id="_IDGenTextKmMax" text="KM_MAX" />
-                </Column>
-                <Column id="_IDGenColumnKmMin" width="7em">
-                  <Text id="_IDGenTextKmMin" text="KM_MIN" />
-                </Column>
-                <Column id="_IDGenColumnStatus" width="7em">
-                  <Text id="_IDGenTextStatus" text="Status" />
-                </Column>
-                <!-- <Column id="_IDGenColumnd"
-                    minScreenWidth="Tablet"
-                    demandPopin="true" visible="false">
-                  <Text id="_IDGenTextd" text="{i18n>Description}" />
-                </Column> -->
-                <Column id="_IDGenColumns" width="7em"
-                    minScreenWidth="Tablet"
-                    demandPopin="true">
-                  <Text id="_IDGenTexts" text="{i18n>Serial Number}" />
-                </Column>
-                </columns>
-                <items>
-                  <ColumnListItem id="_IDGenColumnListItem" vAlign="Middle" >
-                    <cells>
-                        <Text id="_IDGenText9" text="{matList>Equipment}"/>
-                        <Text id="_IDGenText6" text="{matList>Material}"/>
-                        <Text id="_IDGenTextMatDesc" text="{matList>MaterialDescription}"/>
+        <t:Table id="idserialNoCreateTable"
+            rows="{matList>/root}"
+            selectionMode="MultiToggle"
+            rowSelectionChange="onSelectionChange"
+            width="100%"
+            visibleRowCountMode="Auto"
+            columnResize="true"
+            enableColumnReordering="true">
+            <t:columns>
+                <t:Column id="_IDGenColumne" width="8rem">
+                    <Label text="{i18n>Equipment}"/>
+                    <t:template><Text text="{matList>Equipment}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnm" width="8rem">
+                    <Label text="{i18n>Material}"/>
+                    <t:template><Text text="{matList>Material}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnmdesc" width="12rem">
+                    <Label text="{i18n>Description}"/>
+                    <t:template><Text text="{matList>MaterialDescription}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnfg" width="10rem">
+                    <Label text="Functional Group"/>
+                    <t:template>
                         <Input id="_IDGenTextFg" value="{matList>FunctionalGroup}" enabled="{= ${matList>CreationEditable} === true }"/>
+                    </t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnPos" width="8rem">
+                    <Label text="{i18n>Position}"/>
+                    <t:template>
                         <Input id="_IDGenTextPosition" value="{matList>Position}" enabled="{= ${matList>CreationEditable} === true }"/>
+                    </t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnNote" width="8rem">
+                    <Label text="{i18n>Note}"/>
+                    <t:template>
                         <Input id="_IDGenTextNote" value="{matList>Note}" enabled="{= ${matList>CreationEditable} === true }"/>
-                        <Text id="_IDGenTextKm" text="{matList>km}"/>
-                        <Text id="_IDGenTextRevisionNo" text="{matList>RevisionNumber}"/>
-                        <Text id="_IDGenTextRevisionKm" text="{matList>RevisionKm}"/>
-                        <Text id="_IDGenTextKmRevision1" text="{matList>Revisione}"/>
-                        <Text id="_IDGenTextKmMax1" text="{matList>KmMax}"/>
-                        <Text id="_IDGenTextKmMin1" text="{matList>KmMin}"/>
-                        <core:Icon
-                          id="_IDGenStatusTrafficLight"
-                          src="sap-icon://circle-task-2"
-                          size="1rem"
-                          color="{path: 'matList>StatusCode', formatter: '.statusCodeToColor'}"
-                          visible="{matList>ShowStatus}"
-                          tooltip="{matList>Status}" />
-                        <!-- <Text id="_IDGenText7" text="{matList>Desc}"/> -->
-                        <!-- <Text id="_IDGenText8" text="{matList>snumber}"/> -->
-                        <Input id="_IDGenInput" value="{matList>snumber}" enabled="{= !${matList>snumber} }"
-                        />
-                    </cells>
-                   </ColumnListItem>
-                </items>                
-        </Table>
-        </ScrollContainer>
+                    </t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnkm" width="6rem">
+                    <Label text="KM"/>
+                    <t:template><Text id="_IDGenTextKm" text="{matList>km}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnRevNo" width="9rem">
+                    <Label text="Revision Number"/>
+                    <t:template><Text id="_IDGenTextRevisionNo" text="{matList>RevisionNumber}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnRevKm" width="9rem">
+                    <Label text="Km after last revision"/>
+                    <t:template><Text id="_IDGenTextRevisionKm" text="{matList>RevisionKm}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnKmRevision" width="8rem">
+                    <Label text="Revision KM"/>
+                    <t:template><Text id="_IDGenTextKmRevision1" text="{matList>Revisione}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnKmMax" width="7rem">
+                    <Label text="KM_MAX"/>
+                    <t:template><Text id="_IDGenTextKmMax1" text="{matList>KmMax}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnKmMin" width="7rem">
+                    <Label text="KM_MIN"/>
+                    <t:template><Text id="_IDGenTextKmMin1" text="{matList>KmMin}"/></t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumnStatus" width="7rem">
+                    <Label text="Status"/>
+                    <t:template>
+                        <core:Icon id="_IDGenStatusTrafficLight"
+                            src="sap-icon://circle-task-2"
+                            size="1rem"
+                            color="{path: 'matList>StatusCode', formatter: '.statusCodeToColor'}"
+                            visible="{matList>ShowStatus}"
+                            tooltip="{matList>Status}"/>
+                    </t:template>
+                </t:Column>
+                <t:Column id="_IDGenColumns" width="8rem">
+                    <Label text="{i18n>Serial Number}"/>
+                    <t:template>
+                        <Input id="_IDGenInput" value="{matList>snumber}" enabled="{= !${matList>snumber} }"/>
+                    </t:template>
+                </t:Column>
+            </t:columns>
+        </t:Table>
       </content>
      </Page>
 </mvc:View>
