@@ -143,12 +143,14 @@
                     <t:Column id="_IDGenColumn72" width="5rem" showFilterMenuEntry="true" filterProperty="Revisione">
                         <Label id="_IDGenLabelrevkm" wrapping="true" text="Km after last revision"/>
                         <t:template>
+                        <!-- <Text id="_IDGenTextrevkm21" text="{mList>Revisione}"/> -->
                             <Text id="_IDGenTextrevkm" text="{mList>RevisionKm}"/>
                         </t:template>
                     </t:Column>
                     <t:Column id="_IDGenColumn722" width="5rem" showFilterMenuEntry="true" filterProperty="Revisione">
                         <Label id="_IDGenLabelrevkm2" wrapping="true" text="Revision KM"/>
                         <t:template>
+                        <!-- <Text id="_IDGenTextrevkm" text="{mList>RevisionKm}"/> -->
                             <Text id="_IDGenTextrevkm2" text="{mList>Revisione}"/>
                         </t:template>
                     </t:Column>

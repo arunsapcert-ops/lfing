@@ -48,6 +48,12 @@
                     <Label text="{i18n>Description}"/>
                     <t:template><Text text="{matList>MaterialDescription}"/></t:template>
                 </t:Column>
+                <t:Column id="_IDGenColumns" width="8rem">
+                    <Label text="{i18n>Serial Number}"/>
+                    <t:template>
+                        <Input id="_IDGenInput" value="{matList>snumber}" enabled="{= !${matList>snumber} }"/>
+                    </t:template>
+                </t:Column>
                 <t:Column id="_IDGenColumnfg" width="10rem">
                     <Label text="Functional Group"/>
                     <t:template>
@@ -100,13 +106,7 @@
                             visible="{matList>ShowStatus}"
                             tooltip="{matList>Status}"/>
                     </t:template>
-                </t:Column>
-                <t:Column id="_IDGenColumns" width="8rem">
-                    <Label text="{i18n>Serial Number}"/>
-                    <t:template>
-                        <Input id="_IDGenInput" value="{matList>snumber}" enabled="{= !${matList>snumber} }"/>
-                    </t:template>
-                </t:Column>
+                </t:Column>                
             </t:columns>
         </t:Table>
       </content>

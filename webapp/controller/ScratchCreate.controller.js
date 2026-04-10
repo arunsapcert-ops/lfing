@@ -814,6 +814,218 @@ sap.ui.define([
 
 
 
+                            // function remapFields(node) {
+
+                            //     // const kmValue =
+                            //     //     (node.RevisionNumber && Number(node.RevisionNumber) > 0)
+                            //     //         ? Number(node.RevisionKm || 0)
+                            //     //         : Number(node.Km || 0);
+
+                            //     // const kmMin = Number(node.KmMin || node.min || 0);
+                            //     // const kmMax = Number(node.KmMax || node.max || 0);
+
+                            //     // const normalize = v => Number(String(v).replace(" km", "").replace(/\./g, "")) || 0;
+                            //     const normalize = v => {
+                            //         if (v == null || v === "") return 0;
+
+                            //         // remove unit + trim, keep decimal separator
+                            //         const s = String(v)
+                            //             .replace(/ km/i, "")
+                            //             .trim()
+                            //             .replace(",", ".");   // if backend ever sends "400,00"
+
+                            //         return Number(s) || 0;
+                            //     };
+
+                            //     // let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
+                            //     // let revisionKmRaw = node.RevisionKm ?? "";
+                            //     // if (bIsLifingManagement) {
+                            //     //     [kmAfterLastRevisionRaw, revisionKmRaw] = [revisionKmRaw, kmAfterLastRevisionRaw];
+                            //     // }
+
+                            //     // const nKmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
+
+
+                            //     const kmValue = normalize(
+                            //         node.RevisionNumber > 0 ? node.RevisionKm : node.Km
+                            //         // node.RevisionNumber > 0 ? revisionKmRaw : node.Km
+                            //     );
+
+                            //     const kmMin = normalize(node.KmMin || node.min);
+                            //     const kmMax = normalize(node.KmMax || node.max);
+
+
+                            //     // --- traffic light logic ---
+                            //     // let traffic = "G"; // default
+
+                            //     // if (kmValue < kmMin) {
+                            //     //     traffic = "G"; // Green
+                            //     // } else if (kmValue >= kmMin && kmValue < kmMax) {
+                            //     //     traffic = "Y"; // Yellow
+                            //     // } else if (kmValue >= kmMax) {
+                            //     //     traffic = "R"; // Red
+                            //     // }
+
+                            //     // let trafficIcon = "sap-icon://status-positive";
+                            //     // let trafficColor = "Positive";
+
+                            //     // if (traffic === "Y") {
+                            //     //     trafficIcon = "sap-icon://status-critical";
+                            //     //     trafficColor = "Critical";
+                            //     // } else if (traffic === "R") {
+                            //     //     trafficIcon = "sap-icon://status-negative";
+                            //     //     trafficColor = "Negative";
+                            //     // }
+                            //     const kmAlert = that._getKmAlertValue();
+                            //     let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
+                            //     let revisionKmRaw = node.RevisionKm ?? "";
+                            //     // if (bIsLifingManagement) {
+                            //     //     [kmAfterLastRevisionRaw, revisionKmRaw] = [revisionKmRaw, kmAfterLastRevisionRaw];
+                            //     // }
+
+                            //     const kmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
+                            //     const { traffic, icon: trafficIcon, color: trafficColor } =
+                            //         that._computeTraffic({
+                            //             revisionNumber: node.RevisionNumber,
+                            //             max: kmMax,
+                            //             min: kmMin,
+                            //             km: normalize(node.Km),
+                            //             revisionKm: normalize(revisionKmRaw),
+                            //             kmAfterLastRevision,
+                            //             kmAlert
+                            //         });
+                            //     return {
+                            //         fg: node.FunctionalGroup || node.fg || "",
+                            //         level: node.Position || '',
+                            //         Equipment: node.Equipment || '',
+                            //         Material: node.Material || '',
+                            //         MaterialDescription: node.MaterialDescription || '',
+                            //         sNo: node.SerialNumber || "",
+                            //         Note: node.Note || "",
+                            //         KmRevisione: node.KmRevisione || '',
+                            //         RevisionNumber: node.RevisionNumber || '',
+                            //         // RevisionKm: node.RevisionKm || '',KmRevisione
+                            //         RevisionKm:node.RevisionKm || '',
+                            //         Revisione:node.KmRevisione || '',
+                            //         // RevisionKm: node.RevisionKm || '',
+                            //         min: node.KmMin || "",
+                            //         max: node.KmMax || "",
+                            //         Km: node.Km,
+                            //         NextRun: node.NextRun,
+                            //         KmNextRun: node.KmNextRun,
+                            //         TrafficLight: traffic,
+                            //         TrafficIcon: trafficIcon,       // new
+                            //         TrafficColor: trafficColor,
+                            //         Father: node.Father || node.father || "",
+                            //         children: node.children ? node.children.map(remapFields) : []
+                            //     };
+                            // }
+
+                            // function remapFields(node) {
+
+                            //     // const kmValue =
+                            //     //     (node.RevisionNumber && Number(node.RevisionNumber) > 0)
+                            //     //         ? Number(node.RevisionKm || 0)
+                            //     //         : Number(node.Km || 0);
+
+                            //     // const kmMin = Number(node.KmMin || node.min || 0);
+                            //     // const kmMax = Number(node.KmMax || node.max || 0);
+
+                            //     // const normalize = v => Number(String(v).replace(" km", "").replace(/\./g, "")) || 0;
+                            //     const normalize = v => {
+                            //         if (v == null || v === "") return 0;
+
+                            //         // remove unit + trim, keep decimal separator
+                            //         const s = String(v)
+                            //             .replace(/ km/i, "")
+                            //             .trim()
+                            //             .replace(",", ".");   // if backend ever sends "400,00"
+
+                            //         return Number(s) || 0;
+                            //     };
+
+                            //     const kmValue = normalize(
+                            //         node.RevisionNumber > 0 ? node.RevisionKm : node.Km
+                            //         // node.RevisionNumber > 0 ? revisionKmRaw : node.Km
+                            //     );
+
+                            //     const kmMin = normalize(node.KmMin || node.min);
+                            //     const kmMax = normalize(node.KmMax || node.max);
+
+
+                            //     // --- traffic light logic ---
+                            //     // let traffic = "G"; // default
+
+                            //     // if (kmValue < kmMin) {
+                            //     //     traffic = "G"; // Green
+                            //     // } else if (kmValue >= kmMin && kmValue < kmMax) {
+                            //     //     traffic = "Y"; // Yellow
+                            //     // } else if (kmValue >= kmMax) {
+                            //     //     traffic = "R"; // Red
+                            //     // }
+
+                            //     // let trafficIcon = "sap-icon://status-positive";
+                            //     // let trafficColor = "Positive";
+
+                            //     // if (traffic === "Y") {
+                            //     //     trafficIcon = "sap-icon://status-critical";
+                            //     //     trafficColor = "Critical";
+                            //     // } else if (traffic === "R") {
+                            //     //     trafficIcon = "sap-icon://status-negative";
+                            //     //     trafficColor = "Negative";
+                            //     // }
+                            //     const kmAlert = that._getKmAlertValue();
+
+                            //     let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
+                            //     let revisionKmRaw = node.RevisionKm ?? "";
+                            //     // In lifing management, these fields are now aligned with the UI columns:
+                            //     // - KmRevisione: km after last revision
+                            //     // - RevisionKm: revision KM
+
+                            //     const kmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
+                            //     const trafficInputs = {
+                            //         revisionNumber: node.RevisionNumber,
+                            //         max: kmMax,
+                            //         min: kmMin,
+                            //         km: normalize(node.Km),
+                            //         // revisionKm: normalize(revisionKmRaw),
+                            //         // kmAfterLastRevision,
+                            //         revisionKm: normalize(kmAfterLastRevisionRaw),
+                            //         kmAfterLastRevision: normalize(revisionKmRaw),
+                            //         kmAlert
+                            //     };
+
+                            //     const { traffic, icon: trafficIcon, color: trafficColor } =
+                            //         that._computeTraffic(trafficInputs);
+                            //     return {
+                            //         fg: node.FunctionalGroup || node.fg || "",
+                            //         level: node.Position || '',
+                            //         Equipment: node.Equipment || '',
+                            //         Material: node.Material || '',
+                            //         MaterialDescription: node.MaterialDescription || '',
+                            //         sNo: node.SerialNumber || "",
+                            //         Note: that._blankIfNullishNote(node.Note),
+                            //         KmRevisione: (kmAfterLastRevisionRaw ?? ''),
+                            //         RevisionNumber: node.RevisionNumber || '',
+                            //         // RevisionKm: node.RevisionKm || '',KmRevisione
+                            //         // View maps "Km after last revision" from RevisionKm,
+                            //         // and "Revision KM" from Revisione.
+                            //         RevisionKm: (kmAfterLastRevisionRaw ?? ''),
+                            //         Revisione: (revisionKmRaw ?? ''),
+                            //         // RevisionKm: node.RevisionKm || '',
+                            //         min: node.KmMin || "",
+                            //         max: node.KmMax || "",
+                            //         Km: node.Km,
+                            //         NextRun: node.NextRun,
+                            //         KmNextRun: node.KmNextRun,
+                            //         TrafficLight: traffic,
+                            //         TrafficIcon: trafficIcon,       // new
+                            //         TrafficColor: trafficColor,
+                            //         Father: node.Father || node.father || "",
+                            //         children: node.children ? node.children.map(remapFields) : []
+                            //     };
+                            // }
+
                             function remapFields(node) {
 
                                 // const kmValue =
@@ -836,15 +1048,6 @@ sap.ui.define([
 
                                     return Number(s) || 0;
                                 };
-
-                                // let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
-                                // let revisionKmRaw = node.RevisionKm ?? "";
-                                // if (bIsLifingManagement) {
-                                //     [kmAfterLastRevisionRaw, revisionKmRaw] = [revisionKmRaw, kmAfterLastRevisionRaw];
-                                // }
-
-                                // const nKmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
-
 
                                 const kmValue = normalize(
                                     node.RevisionNumber > 0 ? node.RevisionKm : node.Km
@@ -877,17 +1080,25 @@ sap.ui.define([
                                 //     trafficColor = "Negative";
                                 // }
                                 const kmAlert = that._getKmAlertValue();
-                                const kmAfterLastRevision = normalize(node.KmRevisione);
+
+                                let kmAfterLastRevisionRaw = node.KmRevisione ?? "";
+                                let revisionKmRaw = node.RevisionKm ?? "";
+                                // Backend: KmRevisione = km after last revision, RevisionKm = revision KM.
+                                // View: "Km after last revision" → mList>Revisione, "Revision KM" → mList>RevisionKm.
+
+                                const kmAfterLastRevision = normalize(kmAfterLastRevisionRaw);
+                                const trafficInputs = {
+                                    revisionNumber: node.RevisionNumber,
+                                    max: kmMax,
+                                    min: kmMin,
+                                    km: normalize(node.Km),
+                                    revisionKm: normalize(revisionKmRaw),
+                                    kmAfterLastRevision,
+                                    kmAlert
+                                };
+
                                 const { traffic, icon: trafficIcon, color: trafficColor } =
-                                    that._computeTraffic({
-                                        revisionNumber: node.RevisionNumber,
-                                        max: kmMax,
-                                        min: kmMin,
-                                        km: normalize(node.Km),
-                                        revisionKm: normalize(node.RevisionKm),
-                                        kmAfterLastRevision,
-                                        kmAlert
-                                    });
+                                    that._computeTraffic(trafficInputs);
                                 return {
                                     fg: node.FunctionalGroup || node.fg || "",
                                     level: node.Position || '',
@@ -895,12 +1106,11 @@ sap.ui.define([
                                     Material: node.Material || '',
                                     MaterialDescription: node.MaterialDescription || '',
                                     sNo: node.SerialNumber || "",
-                                    Note: node.Note || "",
-                                    KmRevisione: node.KmRevisione || '',
+                                    Note: that._blankIfNullishNote(node.Note),
+                                    KmRevisione: (kmAfterLastRevisionRaw ?? ''),
                                     RevisionNumber: node.RevisionNumber || '',
-                                    // RevisionKm: node.RevisionKm || '',KmRevisione
-                                    RevisionKm:node.RevisionKm || '',
-                                    Revisione:node.KmRevisione || '',
+                                    RevisionKm: (revisionKmRaw ?? ''),
+                                    Revisione: (kmAfterLastRevisionRaw ?? ''),
                                     // RevisionKm: node.RevisionKm || '',
                                     min: node.KmMin || "",
                                     max: node.KmMax || "",
@@ -914,6 +1124,7 @@ sap.ui.define([
                                     children: node.children ? node.children.map(remapFields) : []
                                 };
                             }
+                            
 
                             const aCleanedTree = cleanTree(aTopLevel);
 
@@ -2955,6 +3166,15 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                         aItems.forEach((item) => {
                             const childPath = item.getBindingContext("eList").getObject().itemPath;
                             const childData = oModel.getProperty(childPath);
+
+                            const childResponses = oResp.results.find(
+        res => res.EEQUIPSON === childData.Equipment    );
+
+    
+    if (childResponses && childResponses.ZRETURN === "KO") {
+        sap.m.MessageToast.show(childResponses.ZRETURN_MSG);
+        return; // ❗ skip this row entirely
+    }
                             
                             parentNode.children = parentNode.children || [];
                             parentNode.children.push(childData);
@@ -2970,6 +3190,11 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                                 aInstalledChildren.push(childData.Equipment);
                             }
                         });
+
+                         if (childrenItemPaths.length === 0) {
+                            oView.setBusy(false);
+                            return;
+                        }
 
                         /** STEP 3 — REMOVE CHILDREN FROM ROOT LEVEL */
                         // aItems.forEach(item => {
@@ -3042,7 +3267,7 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                             
                         } else {
                             const aInstalledToRestore = [...aInstalledChildren];
-                        that._reloadSubtreeBySerial(rootSerial,topNode.Material)
+                        that._reloadSubtreeBySerial(rootSerial,topNode.Material,sEqStorageLoc)
                             .then(newTree => {
 
                                 // Replace only that root group
@@ -3089,6 +3314,17 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                 });
 
                 this._oEquipDialog.close();
+            },
+
+            _blankIfNullishNote: function (v) {
+                if (v === undefined || v === null) {
+                    return "";
+                }
+                const s = String(v).trim();
+                if (!s || s.toLowerCase() === "null" || s.toLowerCase() === "undefined") {
+                    return "";
+                }
+                return s;
             },
 
             _mapLifingTree: function (records) {
@@ -3267,8 +3503,10 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                 const nMax = Number(max) || 0;
                 const nMin = Number(min) || 0;
                 const nKm = Number(km) || 0;
-                const nRevKm = Number(revisionKm) || 0;
-                const nKmAfter = Number(kmAfterLastRevision) || 0;
+                // const nRevKm = Number(revisionKm) || 0;
+                // const nKmAfter = Number(kmAfterLastRevision) || 0;
+                const nRevKm = Number(kmAfterLastRevision) || 0;
+                const nKmAfter = Number(revisionKm) || 0;
                 const nAlert = Number(kmAlert) || 500;
 
                 const betweenInclusive = (x, a, b) => x >= a && x <= b;
@@ -3344,13 +3582,32 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                 const walk = (arr) => {
                     arr.forEach(node => {
                         if (!node) return;
+                        // const res = this._computeTraffic({
+                        //     revisionNumber: node.RevisionNumber,
+                        //     max: toNumber(node.KmMax ?? node.max),
+                        //     min: toNumber(node.KmMin ?? node.min),
+                        //     km: toNumber(node.Km),
+                        //     revisionKm: toNumber(node.RevisionKm),
+                        //     kmAfterLastRevision: toNumber(node.KmRevisione),
+                        //     kmAlert
+                        // });
+                        // const res = this._computeTraffic({
+                        //     revisionNumber: node.RevisionNumber,
+                        //     max: toNumber(node.KmMax ?? node.max),
+                        //     min: toNumber(node.KmMin ?? node.min),
+                        //     km: toNumber(node.Km),
+                        //     revisionKm: toNumber(node.RevisionKm),
+                        //     kmAfterLastRevision: toNumber(node.Revisione),
+                        //     kmAlert
+                        // });
+
                         const res = this._computeTraffic({
                             revisionNumber: node.RevisionNumber,
                             max: toNumber(node.KmMax ?? node.max),
                             min: toNumber(node.KmMin ?? node.min),
                             km: toNumber(node.Km),
                             revisionKm: toNumber(node.RevisionKm),
-                            kmAfterLastRevision: toNumber(node.KmRevisione),
+                            kmAfterLastRevision: toNumber(node.Revisione),
                             kmAlert
                         });
 
@@ -3410,15 +3667,18 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                 if (node.Equipment === eq) return true;
                 return node.children?.some(c => this._containsEq(c, eq)) || false;
             },
-            _reloadSubtreeBySerial: function (serial,material) {
+            _reloadSubtreeBySerial: function (serial,material,sLgortOverride) {
                 return new Promise((resolve, reject) => {
 
                     const oSrv = this.getOwnerComponent().getModel("fourthModel");
+                    const sLgort = (sLgortOverride != null && String(sLgortOverride).trim() !== "")
+                        ? String(sLgortOverride).trim()
+                        : (this.storageLocation || "").trim();
 // this.storageLocation
                     const oFilter = new sap.ui.model.Filter({
                         filters: [
                             new sap.ui.model.Filter({ path: "ISernr", operator: "EQ", value1: serial }),
-                            new sap.ui.model.Filter({ path: "ILgort", operator: "EQ", value1:this.storageLocation }),
+                            new sap.ui.model.Filter({ path: "ILgort", operator: "EQ", value1:sLgort }),
                             new sap.ui.model.Filter({ path: "IParameter", operator: "EQ", value1: "B" }),
                             new sap.ui.model.Filter({ path: "IMatnr", operator: "EQ", value1: material })
                         ],
@@ -3884,7 +4144,8 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                                     that.mGroupData[fgKey].push(childCopy);
                                 }
                             } else if (res.ZRETURN === "KO") {
-                                MessageBox.show("Dismantle failed");
+                                // MessageBox.show("Dismantle failed");
+                                MessageBox.show((res.ZRETURN_MSG || "Dismantle failed").trim());
                             }
                         });
 
@@ -4238,7 +4499,7 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                                     Father: node.Father || node.father || "",
                                     children: node.children ? node.children.map(remapFields) : []
                                 };
-                            }
+                            }                        
 
 
                             const aCleanedTree = cleanTree(aTopLevel);
@@ -4475,6 +4736,7 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
             },
             _mapSnumberItemToNode: function (sItem) {
                 const oItem = sItem.getBindingContext("snumberList").getObject();
+                const sNoteRaw = oItem.Note != null ? oItem.Note : oItem.Znote;
                 return {
                     Equipment: oItem.Zequnr,
                     MaterialDescription: oItem.Zmaktx,
@@ -4482,7 +4744,8 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                     sNo: oItem.Zsernr,
                     fg: oItem.ZfunctionalGroup || "",
                     level: oItem.Zposition || "",
-                    Note: oItem.Note || "",
+                    // Note: oItem.Note || "",
+                    Note: this._blankIfNullishNote(sNoteRaw),
                     km: oItem.Zkm2 || "",
                     RevisionNumber: oItem.ZrevisionNumber || "",
                     RevisionKm: oItem.ZrevisionKm || "",
@@ -4564,12 +4827,24 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
 
                         const oParentNode = oModel.getData().root[0];
                         oParentNode.children = oParentNode.children || [];
-
+                        let sKoMessage = "";
                         aSelectedItems.forEach((sItem) => {
                             const oItemData = sItem.getBindingContext("snumberList").getObject();
                             const sSonEq = oItemData.Zequnr;
                             const oBackendRes = mResultBySon[sSonEq];
-                            if (!oBackendRes || oBackendRes.ZRETURN !== "OK") {
+                            // if (!oBackendRes || oBackendRes.ZRETURN !== "OK") {
+                            //     return;
+                            // }
+                            if (!oBackendRes) {
+                                return;
+                            }
+                            if (oBackendRes.ZRETURN === "KO") {
+                                if (!sKoMessage) {
+                                    sKoMessage = (oBackendRes.ZRETURN_MSG || "Installation failed").trim();
+                                }
+                                return;
+                            }
+                            if (oBackendRes.ZRETURN !== "OK") {
                                 return;
                             }
 
@@ -4588,7 +4863,12 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                         oModel.updateBindings();
                         that.getView().setBusy(false);
                         that._oMatListDialog.close();
-                        MessageToast.show("Installation completed.");
+                        if (sKoMessage) {
+                            MessageBox.show(sKoMessage);
+                        } else {
+                            MessageToast.show("Installation completed.");
+                        }
+                        // MessageToast.show("Installation completed.");
                     },
                     error: function () {
                         that.getView().setBusy(false);
