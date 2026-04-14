@@ -229,8 +229,9 @@
                              <ObjectStatus id="_IDGenText16" 
                                    text="{mList>fbMessage}" 
                                    visible="{= ${mList>fb} !== 'OK'}"
-                                   state="{= ${mList>fbMessage} === 'Installed' ? 'Success' : ${mList>fbMessage} === 'Dismantled' ? 'Error' : 'None'}"/>
-                                   <!-- state="{= ${mList>fbMessage} === 'Installed' ? 'Success' : 'None'}"/> -->
+                                   state="{= ${mList>fbMessage} === 'Installed' ? 'Success' : ${mList>fbMessage} === 'Dismantled' ? 'Error' : ${mList>fbMessage} === 'Material Description is missing' ? 'Error' : 'None'}"
+                                   />
+                                   
                              <core:Icon id="_IDGenIcon" src="sap-icon://accept" visible="{= ${mList>fb} === 'OK'}"/>
                            </VBox>
                         </t:template>

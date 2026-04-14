@@ -773,7 +773,47 @@ sap.ui.define([
                                 }
                             }
 
+                            // function hasSerialNumber(nodes, sSno) {
+                            //     if (!Array.isArray(nodes) || !sSno) return false;
+                            //     for (let i = 0; i < nodes.length; i++) {
+                            //         const n = nodes[i];
+                            //         const sno = n?.SerialNumber ?? n?.sNo ?? n?.Sernr ?? "";
+                            //         if (String(sno).trim() === String(sSno).trim()) return true;
+                            //         if (n?.children && hasSerialNumber(n.children, sSno)) return true;
+                            //     }
+                            //     return false;
+                            // }
+
+                            // // Avoid adding duplicate structure when searching the same Serial Number again
+                            // if (hasSerialNumber(aExisting, matSelected)) {
+                            //     // MessageToast.show("Serial Number already exists in table");
+                            //     that.getView().setBusy(false);
+                            //     return;
+                            // }
+
                             // Step 1: Index records by Equipment
+                            
+                            function hasSerialNumber(nodes, sSno) {
+                                if (!Array.isArray(nodes) || !sSno) return false;
+                                for (let i = 0; i < nodes.length; i++) {
+                                    const n = nodes[i];
+                                    const sno = n?.SerialNumber ?? n?.sNo ?? n?.Sernr ?? "";
+                                    if (String(sno).trim() === String(sSno).trim()) return true;
+                                    if (n?.children && hasSerialNumber(n.children, sSno)) return true;
+                                }
+                                return false;
+                            }
+
+                            function removeSerialNumberStructure(nodes, sSno) {
+                                if (!Array.isArray(nodes) || !sSno) return Array.isArray(nodes) ? nodes : [];
+                                return nodes.filter(n => !hasSerialNumber([n], sSno));
+                            }
+
+                            // Refresh/replace: if same Serial Number is searched again, drop old structure and re-add latest
+                            if (hasSerialNumber(aExisting, matSelected)) {
+                                aExisting = removeSerialNumberStructure(aExisting, matSelected);
+                            }
+
                             const mByEquip = new Map();
                             aNew.forEach(rec => {
                                 rec.children = []; // Initialize for nesting
@@ -1129,14 +1169,18 @@ sap.ui.define([
                             const aCleanedTree = cleanTree(aTopLevel);
 
                             // Step 4: Merge with existing root nodes
-                            const aMerged = aExisting.concat(aCleanedTree);
-                            const aRemapped = aMerged.map(remapFields);
+                            //    const aMerged = aExisting.concat(aCleanedTree);
+                            //    const aRemapped = aMerged.map(remapFields);
+                            // Step 4: Remap only new records, then merge (existing is already remapped)
+                            const aNewRemapped = aCleanedTree.map(remapFields);
+                            const aMerged = aExisting.concat(aNewRemapped);
                             // Step 5: Update the model
-                            oMListModel.setData({ root: aRemapped });
+                            //  oMListModel.setData({ root: aRemapped });
+                            oMListModel.setData({ root: aMerged });
                             oMListModel.updateBindings();
 
                             console.log("Merged Tree Data (fourthModel):", aMerged);
-                            console.log("aRemapped Tree Data (fourthModel):", aRemapped);
+                            console.log("aRemapped Tree Data (fourthModel):", aMerged);
                         },
                         error: function (oError) {
                             that.getView().setBusy(false);
@@ -1476,7 +1520,16 @@ sap.ui.define([
                         if (oresponse.results[0].ERETURNCODE == "OK") {
                             var ind = that.getView().getModel("mList").getData().root.length - 1;
                             // var ind = Math.max(0, that.getView().getModel("mList").getData().root.length - 1);
-                            that.getView().getModel("mList").getData().root[ind].MaterialDescription = oresponse.results[0].EMATDESC;
+                            var sMatDesc = oresponse.results[0].EMATDESC;
+                            that.getView().getModel("mList").getData().root[ind].MaterialDescription = sMatDesc;
+                            if (!sMatDesc || !String(sMatDesc).trim()) {
+                                var oRow = that.getView().getModel("mList").getData().root[ind];
+                                oRow.fb = "KO";
+                                if (!oRow.fbMessage || String(oRow.fbMessage).trim() === "") {
+                                    oRow.fbMessage = "Material Description is missing";
+                                }
+                            }
+                            // that.getView().getModel("mList").getData().root[ind].MaterialDescription = oresponse.results[0].EMATDESC;
                             that.getView().getModel("mList").getData().root[ind].sNo = "";
                             // that.getView().getModel("mList").getData().root[ind].isNo = that.getView().getModel("mList").getData().root[ind].isNo ? that.getView().getModel("mList").getData().root[ind].isNo : "";
                             that.getView().getModel("mList").getData().root[ind].km = that.getView().getModel("mList").getData().root[ind].km ? that.getView().getModel("mList").getData().root[ind].km : "";
@@ -1819,8 +1872,15 @@ sap.ui.define([
                                     row.Revisione = aData.EKMREVISION;
                                     row.min = aData.EKMMIN;
                                     row.max = aData.EKMMAX;
-                                    row.fb = "OK";
-                                    row.fbMessage = "";
+                                    if (!aData.EMATDESC || !String(aData.EMATDESC).trim()) {
+                                        row.fb = "KO";
+                                        row.fbMessage = "Material Description is missing";
+                                    } else {
+                                        row.fb = "OK";
+                                        row.fbMessage = "";
+                                    }
+                                    // row.fb = "OK";
+                                    // row.fbMessage = "";
                                 } else if (aData.ERETURNCODE === "KO") {
 
                                     row.fb = "KO";
@@ -4271,9 +4331,12 @@ const sEqStorageLoc = ((this.byId("idStorageLocInputEq")?.getValue() || "").trim
                     var odataCall = "/ZLIFING4Set";
                     var that = this;
                     this.bStructure = false;
-                    var sStorageLoc = (storageLocationStruct && storageLocationStruct.trim() !== "") 
-                        ? storageLocationStruct.trim() 
-                        : (this.storageLocation || "");
+                    // var sStorageLoc = (storageLocationStruct && storageLocationStruct.trim() !== "") 
+                    //     ? storageLocationStruct.trim() 
+                    //     : (this.storageLocation || "");
+                    var sStorageLoc = (storageLocationStruct && storageLocationStruct.trim() !== "")
+                        ? storageLocationStruct.trim()
+                        : "";
                     var oFilter = new sap.ui.model.Filter({
                         filters: [
                             new sap.ui.model.Filter({
